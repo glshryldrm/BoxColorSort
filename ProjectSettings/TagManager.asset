@@ -4,7 +4,13 @@
 TagManager:
   serializedVersion: 2
   tags:
+<<<<<<< HEAD
   - Sphere
+=======
+  - red
+  - orange
+  - yellow
+>>>>>>> 559ec73762a2035f2528166593a26a2e868c651c
   layers:
   - Default
   - TransparentFX
