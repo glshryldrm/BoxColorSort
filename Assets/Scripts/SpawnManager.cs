@@ -1,46 +1,20 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelManager : MonoBehaviour
+public class SpawnManager : MonoBehaviour
 {
-    public GameObject spherePrefab;
-    public GameObject cubePrefab;
-    private Vector3 cubeVector;
-    private GameObject newCube;
+    private LevelManager levelManager;
     private Color baseColor;// Baþlangýç rengi
-    public GameObject[] spheres;
-    public Color[] colors;
-    public Vector3[] cubes;
-    private float deviation = 0.15f;
-
-    public int currentLevel = 3;
-   
-
-    void Start()
-    {
-        SetupLevel(currentLevel);
-    }
-    public void SetupLevel(int level)
-    {
-        foreach (var sphere in spheres)
-        {
-            Destroy(sphere);
-        }
-        colors = new Color[currentLevel + 2]; // colors dizisini oluþtur
-        cubes = new Vector3[currentLevel + 2]; // cubes dizisini oluþtur
-        spheres = new GameObject[currentLevel + 2];
-
-        SpawnSphere(spherePrefab);
-        OrderSpheresByBrightness();
-        SpawnCube(cubePrefab);
-
-
-        }
+    private float deviation = 0.2f;
+    private float brightness = 1f;
+    
     public void SpawnSphere(GameObject prefab)
     {
-        int count = currentLevel + 2; // Her seviyede küre sayýsýný artýr
+        int count = levelManager.currentLevel + 2; // Her seviyede küre sayýsýný artýr
         float spacing = 2f; // Küreler arasýndaki mesafe
         float totalSphereWidth = (count - 1) * spacing; // Toplam küre geniþliði
-
+        
 
         float startingX = -totalSphereWidth / 2f; // Baþlangýç X pozisyonu
         float startingY = 1.5f;                   // Y pozisyonu (sabit)
@@ -50,7 +24,7 @@ public class LevelManager : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            
+
             Color closeRandomColor = GenerateCloseRandomColor(baseColor, deviation);
 
             float xPos = startingX + i * spacing;
@@ -59,24 +33,11 @@ public class LevelManager : MonoBehaviour
 
             GameObject newBall = Instantiate(prefab, new Vector3(xPos, yPos, zPos), Quaternion.identity);
             newBall.GetComponent<Renderer>().material.color = closeRandomColor;
-            newBall.AddComponent<ClickToMoveToArea>();
-
-            spheres[i] = newBall; 
         }
     }
-    public void OrderSpheresByBrightness()
-    {
-        System.Array.Sort(spheres, (x, y) =>
-        {
-            float brightnessX = x.GetComponent<Renderer>().material.color.grayscale;
-            float brightnessY = y.GetComponent<Renderer>().material.color.grayscale;
-            return brightnessY.CompareTo(brightnessX);
-        });
-    }
-
     public void SpawnCube(GameObject prefab)
     {
-        int count = currentLevel + 2;   // Her seviyede kutu sayýsýný artýr
+        int count = levelManager.currentLevel + 2;   // Her seviyede kutu sayýsýný artýr
         float spacing = 2f;   // Kutular arasýndaki mesafe
         float totalCubeWidth = (count - 1) * spacing;      // Toplam kutu geniþliði
 
@@ -89,11 +50,9 @@ public class LevelManager : MonoBehaviour
             float xPos = startingX + i * spacing;
             float yPos = startingY;
             float zPos = startingZ;
-            cubeVector = new Vector3(xPos, yPos, zPos);
-            newCube = Instantiate(prefab, cubeVector, Quaternion.identity);
-            cubes[i] = cubeVector;
+
+            Instantiate(prefab, new Vector3(xPos, yPos, zPos), Quaternion.identity);
         }
-        
     }
     Color GenerateCloseRandomColor(Color baseColor, float deviation)
     {
@@ -109,30 +68,10 @@ public class LevelManager : MonoBehaviour
             Mathf.Clamp01(baseColor.b + bDeviation)
         );
 
-        //float h, s, v;
-        //Color.RGBToHSV(closeRandomColor, out h, out s, out v);
+        float h, s, v;
+        Color.RGBToHSV(closeRandomColor, out h, out s, out v);
 
-        //return Color.HSVToRGB(h, s, brightness);
-        return closeRandomColor;
+        return Color.HSVToRGB(h, s, brightness);
 
     }
-    public void NextLevel()
-    {
-        currentLevel++;
-        SetupLevel(currentLevel);
-    }
-    public Vector3 GetCubePosition(int index)
-    {
-        // index sýnýrlarý kontrol et
-        index = Mathf.Clamp(index, 0, cubes.Length - 1);
-
-        return cubes[index];
-    }
-
-    public int GetSphereIndex(GameObject sphere)
-    {
-        return System.Array.IndexOf(spheres, sphere);
-    }
-
 }
-

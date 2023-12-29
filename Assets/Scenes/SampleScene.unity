@@ -249,7 +249,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spherePrefab: {fileID: 8459909646642727410, guid: fe981b7ff383de245bdeeeb8201b307c, type: 3}
   cubePrefab: {fileID: 3916413511523190380, guid: 9d8378b3c94c16f43b1512641dcd1a21, type: 3}
-  deviation: 0.19
+  spheres: []
+  colors: []
+  cubes: []
+  currentLevel: 3
 --- !u!4 &597375096
 Transform:
   m_ObjectHideFlags: 0
@@ -561,7 +564,6 @@ GameObject:
   - component: {fileID: 1545831560}
   - component: {fileID: 1545831559}
   - component: {fileID: 1545831563}
-  - component: {fileID: 1545831564}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -648,18 +650,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1545831558}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1545831564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1545831558}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d271633c65ff2d42a828d9a5ecddbd9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1550671045
 GameObject:
   m_ObjectHideFlags: 0
