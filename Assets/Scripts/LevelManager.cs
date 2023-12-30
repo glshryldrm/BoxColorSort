@@ -10,7 +10,7 @@ public class LevelManager : MonoBehaviour
     public GameObject[] spheres;
     public Color[] colors;
     public Vector3[] cubes;
-    private float deviation = 0.15f;
+    private float deviation = 0.1f;
 
     public int currentLevel = 3;
    
@@ -51,7 +51,7 @@ public class LevelManager : MonoBehaviour
 
 
             GameObject newBall = Instantiate(prefab,transform.position, Quaternion.identity);
-            newBall.transform.position = new Vector3(Random.Range(-4f, 4f), 1.5f, Random.Range(0f, 5f));
+            newBall.transform.position = new Vector3(Random.Range(-4f, 4f), 1.5f, Random.Range(0f, 10f));
             newBall.GetComponent<Renderer>().material.color = closeRandomColor;
             newBall.AddComponent<ClickToMoveToArea>();
 
