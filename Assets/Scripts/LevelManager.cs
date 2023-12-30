@@ -42,10 +42,6 @@ public class LevelManager : MonoBehaviour
         float totalSphereWidth = (count - 1) * spacing; // Toplam küre geniþliði
 
 
-        float startingX = -totalSphereWidth / 2f; // Baþlangýç X pozisyonu
-        float startingY = 1.5f;                   // Y pozisyonu (sabit)
-        float startingZ = 0f;                          // Z pozisyonu (sabit)
-
         baseColor = Random.ColorHSV();
 
         for (int i = 0; i < count; i++)
@@ -53,11 +49,9 @@ public class LevelManager : MonoBehaviour
             
             Color closeRandomColor = GenerateCloseRandomColor(baseColor, deviation);
 
-            float xPos = startingX + i * spacing;
-            float yPos = startingY;
-            float zPos = startingZ;
 
-            GameObject newBall = Instantiate(prefab, new Vector3(xPos, yPos, zPos), Quaternion.identity);
+            GameObject newBall = Instantiate(prefab,transform.position, Quaternion.identity);
+            newBall.transform.position = new Vector3(Random.Range(-4f, 4f), 1.5f, Random.Range(0f, 5f));
             newBall.GetComponent<Renderer>().material.color = closeRandomColor;
             newBall.AddComponent<ClickToMoveToArea>();
 

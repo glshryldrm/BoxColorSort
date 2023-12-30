@@ -252,7 +252,7 @@ MonoBehaviour:
   spheres: []
   colors: []
   cubes: []
-  currentLevel: 3
+  currentLevel: 7
 --- !u!4 &597375096
 Transform:
   m_ObjectHideFlags: 0
