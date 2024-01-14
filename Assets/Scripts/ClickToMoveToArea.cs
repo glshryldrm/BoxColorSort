@@ -5,29 +5,54 @@ using UnityEngine;
 public class ClickToMoveToArea : MonoBehaviour
 {
     private Vector3 targetPosition;
-    //private bool isFirstClick = true;
     private LevelManager levelManager;
+    private Rigidbody rigidbodyComponent;
+    private GameObject selectedSphere;
 
     private void Start()
     {
         levelManager = FindObjectOfType<LevelManager>();
+        rigidbodyComponent = gameObject.GetComponent<Rigidbody>();
     }
+
     private void OnMouseDown()
     {
-        // Belirli bir alana yerleþtirilecek konumu ayarla
-        int sphereIndex = levelManager.GetSphereIndex(gameObject);
-        targetPosition = levelManager.GetCubePosition(sphereIndex);
-
-        // Yalnýzca týklanan sphere prefabýný taþý
-        MoveToTargetPosition();
-
+        if (levelManager != null)
+        {
+            SelectSphere(gameObject);
+        }
     }
-    private void MoveToTargetPosition()
+
+    IEnumerator MoveToTargetPosition()
     {
+        
+        
+        levelManager.isMoving = true;
+        float duration = 1f;
+        float elapsed = 0f;
+        Vector3 startPosition = selectedSphere.transform.position;
 
-        transform.position = targetPosition;
+        while (elapsed < duration)
+        {
+            selectedSphere.transform.position = Vector3.Lerp(startPosition, targetPosition, elapsed / duration);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
 
+        selectedSphere.transform.position = targetPosition;
+        levelManager.isMoving = false;
 
+        Destroy(rigidbodyComponent);
     }
 
+
+    public void SelectSphere(GameObject sphere)
+    {
+        if (!levelManager.isMoving)
+        {
+            selectedSphere = sphere;
+            targetPosition = levelManager.FindLeftmostEmptySpot();
+            StartCoroutine(MoveToTargetPosition());
+        }
+    }
 }

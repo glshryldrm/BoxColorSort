@@ -252,6 +252,7 @@ MonoBehaviour:
   spheres: []
   colors: []
   cubes: []
+  isMoving: 0
   currentLevel: 3
 --- !u!4 &597375096
 Transform:
@@ -1004,7 +1005,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8885270505335981244, guid: f307ebcd9ef00c0449ee9af2a3d79bd2, type: 3}
       propertyPath: m_Convex
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f307ebcd9ef00c0449ee9af2a3d79bd2, type: 3}

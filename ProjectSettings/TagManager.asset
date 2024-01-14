@@ -4,12 +4,7 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - yellow
-  - 0
-  - 1
-  - 2
-  - 3
-  - 4
+  - Cube
   layers:
   - Default
   - TransparentFX
