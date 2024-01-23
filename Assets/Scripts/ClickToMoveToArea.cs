@@ -42,7 +42,6 @@ public class ClickToMoveToArea : MonoBehaviour
         selectedSphere.transform.position = targetPosition;
         levelManager.isMoving = false;
 
-        Destroy(rigidbodyComponent);
     }
 
 

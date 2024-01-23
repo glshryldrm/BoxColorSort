@@ -30,10 +30,10 @@ public class LevelManager : MonoBehaviour
     }
     public void SetupLevel(int level)
     {
-        foreach (var sphere in spheres)
-        {
-            Destroy(sphere);
-        }
+        //foreach (var sphere in spheres)
+        //{
+        //    Destroy(sphere);
+        //}
         colors = new Color[currentLevel + 2]; // colors dizisini oluþtur
         cubes = new Vector3[currentLevel + 2]; // cubes dizisini oluþtur
         spheres = new GameObject[currentLevel + 2];
@@ -80,7 +80,7 @@ public class LevelManager : MonoBehaviour
     public void SpawnCube(GameObject prefab)
     {
         int count = currentLevel + 2;   // Her seviyede kutu sayýsýný artýr
-        float spacing = 2f;   // Kutular arasýndaki mesafe
+        float spacing = 0.1f;   // Kutular arasýndaki mesafe
         float totalCubeWidth = (count - 1) * spacing;      // Toplam kutu geniþliði
 
         float startingX = -totalCubeWidth / 2f; // Baþlangýç X pozisyonu
