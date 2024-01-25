@@ -811,7 +811,7 @@ MonoBehaviour:
   squareVector: {x: 0, y: 0, z: 0}
   squares: []
   color1: {r: 0, g: 0.4339623, b: 0.06703507, a: 0}
-  color2: {r: 0, g: 1, b: 0.098634005, a: 0}
+  color2: {r: 0, g: 0.6603774, b: 0.06474284, a: 0}
   characters:
   - {fileID: 2120112776}
   - {fileID: 1541054941}

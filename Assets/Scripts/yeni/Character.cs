@@ -5,14 +5,23 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     public int index;
+    public ParticleSystem particlePrefab;
+    Color color;
     
-    public void SetColor(Color color, int i)
+    public void SetColor(Color c, int i)
     {
+        color = c;
+        color.a = 1;
+        gameObject.GetComponent<MeshRenderer>().material.color = c;
         
-        gameObject.GetComponent<MeshRenderer>().material.color = color;
-        ParticleSystem particleSystem = gameObject.GetComponent<ParticleSystem>();
-        var mainModule = particleSystem.main;
-        mainModule.startColor = color;
         index = i;
+    }
+    
+    public void CreateFX()
+    {
+        ParticleSystem fx =  Instantiate(particlePrefab);
+        fx.transform.position = transform.position;
+        var mainModule = fx.main;
+        mainModule.startColor = color;
     }
 }

@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
             float zPos = startingZ;
             squareVector = new Vector3(xPos, yPos, zPos);
             Instantiate(prefab, squareVector, Quaternion.identity);
-            squareVector = new Vector3(xPos, yPos + 0.5f, zPos);
+            squareVector = new Vector3(xPos, yPos + 1f, zPos);
             squares[i] = squareVector;
         }
     }
@@ -62,10 +62,8 @@ public class GameManager : MonoBehaviour
 
         emptyIndex = (emptyIndex + 1) % squares.Length;
         character.transform.position = squares[emptyIndex];
-        character.GetComponent<Rigidbody>().isKinematic = true;
-        character.GetComponent<Collider>().enabled = false;
-        character.GetComponent<ParticleSystem>().Play();
-
+        //character.GetComponent<Rigidbody>().isKinematic = true;
+        //character.GetComponent<Collider>().enabled = false;
         _sortedCharacters.Add(character);
 
         CheckLevelComplate();
