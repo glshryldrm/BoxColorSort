@@ -43,7 +43,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8459909646642727410}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 0}
 --- !u!23 &8055555637060834894
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 0
-  particlePrefab: {fileID: 7968027296277822975, guid: 9d20170f944839541bfcabad4bb332e9, type: 3}
+  particlePrefab: {fileID: 5602239490101141064, guid: 13b38669a6ac6084c9b0f6c08cc19ec2, type: 3}
 --- !u!65 &8212799869370600771
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -11,8 +11,8 @@ public class Character : MonoBehaviour
     public void SetColor(Color c, int i)
     {
         color = c;
-        color.a = 1;
-        gameObject.GetComponent<MeshRenderer>().material.color = c;
+        color.a = 1f;
+        gameObject.GetComponent<SkinnedMeshRenderer>().materials[0].color = c;
         
         index = i;
     }
