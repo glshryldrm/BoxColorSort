@@ -37,7 +37,7 @@ public class LevelManagerr : MonoBehaviour
     }
     string LevelName()
     {
-        if (level == 4)
+        if (level == 5)
         {
             level = 1;
         }

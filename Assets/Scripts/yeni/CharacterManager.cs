@@ -41,9 +41,7 @@ public class CharacterManager : MonoBehaviour
                     {
                         hit.collider.GetComponent<Character>().CreateFX();
                         gameManager.OrganizeCharacter(hit.collider.GetComponent<Character>());
-                        hit.collider.GetComponent<Character>().isClicked = true;
-                        hit.collider.GetComponent<Character>().isClickedAfter = true;
-                        hit.collider.GetComponent<Character>().isOrganized = true;
+                        hit.collider.GetComponent<Character>().ChangeAnimation();
                     }
                 }
             }

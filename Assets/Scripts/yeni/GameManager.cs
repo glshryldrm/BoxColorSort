@@ -5,7 +5,6 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private LevelManagerr LevelManagerr;
-    [SerializeField] private GameObject charPrefab;
     [SerializeField] private GameObject squarePrefab;
     [SerializeField] private float spacing = 1.5f;
     public Vector3 squareVector;
@@ -14,6 +13,7 @@ public class GameManager : MonoBehaviour
     private int emptyIndex = -1;
     [SerializeField] Color color1;
     [SerializeField] Color color2;
+    int maxBoxesPerRow = 5; // Bir sýradaki maksimum kutu sayýsý
 
 
     List<Character> _sortedCharacters = new List<Character>();
@@ -21,7 +21,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         SetCharacterColor();
-        SpawnSquare(squarePrefab);
+        //SpawnSquare(squarePrefab);
+        SpawnBoxes(characters.Count, squarePrefab);
     }
 
     public void SetCharacterColor()
@@ -38,22 +39,16 @@ public class GameManager : MonoBehaviour
 
     public void SpawnSquare(GameObject prefab)
     {
-        float totalCubeWidth = (characters.Count - 1) * spacing;      // Toplam kutu geniþliði
-        float startingX = -totalCubeWidth / 2f; // Baþlangýç X pozisyonu
-        float startingY = 1.5f;                   // Y pozisyonu (sabit)
-        float startingZ = -10f;                          // Z pozisyonu (sabit)
-        squares = new Vector3[characters.Count];
+        
 
-        for (int i = 0; i < characters.Count; i++)
+        if (characters.Count<=5)
         {
-            float xPos = startingX + i * spacing;
-            float yPos = startingY;
-            float zPos = startingZ;
-            squareVector = new Vector3(xPos, yPos, zPos);
-            Instantiate(prefab, squareVector, Quaternion.identity);
-            squareVector = new Vector3(xPos, yPos + 1f, zPos);
-            squares[i] = squareVector;
+            CalculateLoc(characters.Count, prefab);
         }
+        else if(characters.Count>5 & characters.Count<=10)
+        {
+            CalculateLoc(characters.Count, prefab);
+        }        
     }
     public void OrganizeCharacter(Character character)
     {
@@ -98,5 +93,67 @@ public class GameManager : MonoBehaviour
             LevelManagerr.ReloadLevel();
         }
     }
-    
+    void CalculateLoc(int characterCount, GameObject prefab)
+    {
+        
+        float totalCubeWidth = (characterCount -1) * spacing;      // Toplam kutu geniþliði
+        float startingX = -totalCubeWidth / 2f; // Baþlangýç X pozisyonu
+        float startingY = 1.5f;                   // Y pozisyonu (sabit)
+        float startingZ = -10f;                          // Z pozisyonu (sabit)
+        squares = new Vector3[characterCount];
+
+
+        for (int i = 0; i < characterCount; i++)
+        {
+            if (i < 5)
+            {
+                float xPos = startingX + i * spacing;
+                float yPos = startingY;
+                float zPos = startingZ;
+                squareVector = new Vector3(xPos, yPos, zPos);
+                Instantiate(prefab, squareVector, Quaternion.identity);
+                squareVector = new Vector3(xPos, yPos + 1f, zPos);
+                squares[i] = squareVector;
+            }
+            else if (i >= 5)
+            {
+                float xPos = startingX - (characterCount/2) + i * spacing ;
+                float yPos = startingY;
+                float zPos = startingZ - 2f;
+                squareVector = new Vector3(xPos, yPos, zPos);
+                Instantiate(prefab, squareVector, Quaternion.identity);
+                squareVector = new Vector3(xPos, yPos + 1f, zPos);
+                squares[i] = squareVector;
+            }
+            
+        }
+    }
+    void SpawnBoxes(int characterCount, GameObject prefab)
+    {
+        int totalBoxes = characterCount; // Toplam kutu sayýsý
+        int currentRow = 0;  // Mevcut satýr numarasý
+        squares = new Vector3[characterCount];
+
+        for (int i = 0; i < totalBoxes; i++)
+        {
+            // Sýradaki kutunun pozisyonunu belirle
+            //float xPos = (i % maxBoxesPerRow * spacing);
+            float xPos = -(totalBoxes - 1) + i % maxBoxesPerRow * spacing;
+            float zPos = currentRow * spacing -3f;
+
+            // Spawn edilecek kutunun pozisyonunu belirle
+            Vector3 spawnPosition = new Vector3(xPos, 0f, zPos);
+
+            // Kutuyu spawn et
+            GameObject newBox = Instantiate(prefab, spawnPosition, Quaternion.identity);
+            spawnPosition = new Vector3(xPos, 0f, zPos);
+            squares[i] = spawnPosition;
+            // Bir sýradaki maksimum kutu sayýsýna ulaþýldýysa bir üst satýra geç
+            if ((i + 1) % maxBoxesPerRow == 0)
+            {
+                currentRow++;
+            }
+        }
+    }
+
 }

@@ -32,9 +32,29 @@ public class Character : MonoBehaviour
     }
     public bool IsClickedAfter()
     {
+       
         return isClickedAfter;
     }public bool IsOrganized()
     {
         return isOrganized;
+    }
+    public void ChangeAnimation()
+    {
+        if (index == 0)
+        {
+            isClicked = true;
+            isClickedAfter = true;
+        }
+        else
+        {
+            isClicked = true;
+            isClickedAfter = true;
+            
+        }
+        Character[] chars = FindObjectsByType<Character>((FindObjectsSortMode)index);
+        for (int i = 0; i < chars.Length; i++)
+        {
+            chars[i].isOrganized = true;
+        }
     }
 }

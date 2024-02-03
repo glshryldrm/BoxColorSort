@@ -23,4 +23,5 @@ public class CharacterAnimator : MonoBehaviour
         animator.SetBool(IS_CLICKED_AFTER, character.IsClickedAfter());
         animator.SetBool(IS_ORGANIZED, character.IsOrganized());
     }
+    
 }
