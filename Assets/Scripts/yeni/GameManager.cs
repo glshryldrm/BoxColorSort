@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
     {
         if (_sortedCharacters.Contains(character))
             return;
-
+        character.CreateFX();
         emptyIndex = (emptyIndex + 1) % squares.Length;
         character.transform.position = squares[emptyIndex];
         //character.GetComponent<Rigidbody>().isKinematic = true;
@@ -84,12 +84,10 @@ public class GameManager : MonoBehaviour
             Debug.Log("Success");
             //Next level
             LevelManagerr.LoadNextLevel();
-
         }
         else
         {
             Debug.Log("Failed");
-            LevelManagerr.check = true;
             LevelManagerr.ReloadLevel();
         }
     }

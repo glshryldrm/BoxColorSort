@@ -39,7 +39,7 @@ public class CharacterManager : MonoBehaviour
                 {
                     if (hit.collider != null)
                     {
-                        hit.collider.GetComponent<Character>().CreateFX();
+                        
                         gameManager.OrganizeCharacter(hit.collider.GetComponent<Character>());
                         hit.collider.GetComponent<Character>().ChangeAnimation();
                     }

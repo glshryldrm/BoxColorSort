@@ -6,64 +6,51 @@ using TMPro;
 
 public class LevelManagerr : MonoBehaviour
 {
-    public static int level = 1;
-    static int i = 1;
+
     public static bool check = false;
     public TextMeshProUGUI levelText;
+    public GameObject completeLevelUI;
 
     private void Start()
     {
-        changeLevelName();
-    }
-    public void LoadLevel(int level)
-    {
-
-        SceneManager.LoadScene(LevelName());
-        
-
+        //changeLevelName();
+        changeName();
     }
     public void ReloadLevel()
     {
-        LoadLevel(level);
-
-
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     public void LoadNextLevel()
     {
-        
-        level++;
-        LoadLevel(level);
-        
-    }
-    string LevelName()
-    {
-        if (level == 5)
-        {
-            level = 1;
-        }
-        string levelName = "Level" + level; // Seviye adý, örneðin "Level1", "Level2" gibi
-        return levelName;
-    }
-    void changeLevelName()
-    {
+        completeLevelUI.SetActive(true);
 
+        Invoke(nameof(LoadNextLevelPrivate), 1f);
+        
+    }
+    
+    void changeName()
+    {
         if (check)
         {
-            i--;
+            levelText.text = SceneManager.GetActiveScene().name;
             check = false;
-            string levelNameText = "Level " + i;
-            levelText.text = levelNameText;
-            i++;
-
         }
         else
         {
-            string levelNameText = "Level " + i;
-            levelText.text = levelNameText;
-            i++;
-
+            levelText.text = SceneManager.GetActiveScene().name;
         }
-            
-            
+    }
+    void LoadNextLevelPrivate()
+    {
+        check = true;
+        changeName();
+        if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
+        {
+            SceneManager.LoadScene(0);
+        }
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 }
