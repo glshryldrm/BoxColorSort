@@ -2145,6 +2145,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   index: 0
   particlePrefab: {fileID: 0}
+  isClicked: 0
+  isClickedAfter: 0
+  isOrganized: 0
 --- !u!1 &6969640684217728614
 GameObject:
   m_ObjectHideFlags: 0

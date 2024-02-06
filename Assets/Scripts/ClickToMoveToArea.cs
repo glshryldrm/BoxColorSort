@@ -8,18 +8,22 @@ public class ClickToMoveToArea : MonoBehaviour
     private LevelManager levelManager;
     private Rigidbody rigidbodyComponent;
     private GameObject selectedSphere;
+    AudioSource audioSource;
 
     private void Start()
     {
         levelManager = FindObjectOfType<LevelManager>();
         rigidbodyComponent = gameObject.GetComponent<Rigidbody>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnMouseDown()
     {
+        
         if (levelManager != null)
         {
             SelectSphere(gameObject);
+            audioSource.Play();
         }
     }
 
