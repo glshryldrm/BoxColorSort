@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class CharacterManager : MonoBehaviour
 {
-    SoundManager soundManagerScript;
     private Camera cam;
     [SerializeField] LayerMask layer;
     [SerializeField] GameManager gameManager;
@@ -12,7 +11,7 @@ public class CharacterManager : MonoBehaviour
 
     void Start()
     {
-        soundManagerScript = GameObject.Find("Sound Manager").GetComponent<SoundManager>();
+        
         cam = Camera.main;
         FindObjectOfType<Character>();
        
@@ -46,7 +45,8 @@ public class CharacterManager : MonoBehaviour
                 {
                     if (hit.collider != null)
                     {
-                        soundManagerScript.Jump();
+                        SoundManager.PlaySound();
+                        //hit.collider.GetComponent<AudioSource>().PlayOneShot(GameAssets.Instance.audioClip);
                         gameManager.OrganizeCharacter(hit.collider.GetComponent<Character>());
                         hit.collider.GetComponent<Character>().ChangeAnimation();
                        

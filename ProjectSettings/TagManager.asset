@@ -5,7 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Cube
-  - yellow
+  - GameAssetPrefab
   layers:
   - Default
   - TransparentFX

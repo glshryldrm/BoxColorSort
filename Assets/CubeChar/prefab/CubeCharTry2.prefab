@@ -2144,7 +2144,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 0
-  particlePrefab: {fileID: 0}
   isClicked: 0
   isClickedAfter: 0
   isOrganized: 0

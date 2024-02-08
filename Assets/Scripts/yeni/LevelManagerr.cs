@@ -10,6 +10,7 @@ public class LevelManagerr : MonoBehaviour
     public static bool check = false;
     public TextMeshProUGUI levelText;
     public GameObject completeLevelUI;
+    public GameObject reloadLevelUI;
 
     private void Start()
     {
@@ -18,7 +19,8 @@ public class LevelManagerr : MonoBehaviour
     }
     public void ReloadLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        reloadLevelUI.SetActive(true);
+        Invoke(nameof(ReloadLevelPrivate), 1f);
     }
     public void LoadNextLevel()
     {
@@ -52,5 +54,9 @@ public class LevelManagerr : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
+    }
+    void ReloadLevelPrivate()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 6457b96daffa2b344b287800da60a0b2
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - squarePrefab: {instanceID: 0}
+  - particlePrefab: {fileID: 5602239490101141064, guid: 13b38669a6ac6084c9b0f6c08cc19ec2, type: 3}
+  - audioClip: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

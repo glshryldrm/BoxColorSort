@@ -5,7 +5,6 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     public int index;
-    public ParticleSystem particlePrefab;
     Color color;
     public bool isClicked;
     public bool isClickedAfter;
@@ -21,9 +20,9 @@ public class Character : MonoBehaviour
     
     public void CreateFX()
     {
-        ParticleSystem fx =  Instantiate(particlePrefab);
+        GameObject fx =  Instantiate(GameAssets.Instance.particlePrefab);
         fx.transform.position = transform.position;
-        var mainModule = fx.main;
+        var mainModule = fx.GetComponent<ParticleSystem>().main;
         mainModule.startColor = color;
     }
     public bool IsCliked()

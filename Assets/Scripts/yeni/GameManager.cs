@@ -5,7 +5,6 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private LevelManagerr LevelManagerr;
-    [SerializeField] private GameObject squarePrefab;
     [SerializeField] private float spacing = 1.5f;
     public Vector3 squareVector;
     private Color[] generatedColors;
@@ -22,7 +21,7 @@ public class GameManager : MonoBehaviour
     {
         SetCharacterColor();
         //SpawnSquare(squarePrefab);
-        SpawnBoxes(characters.Count, squarePrefab);
+        SpawnBoxes(characters.Count, GameAssets.Instance.squarePrefab);
     }
 
     public void SetCharacterColor()
@@ -126,36 +125,36 @@ public class GameManager : MonoBehaviour
             
         }
     }
-    /*void SpawnBoxes(int characterCount, GameObject prefab)
-    {
-        int totalBoxes = characterCount; // Toplam kutu sayýsý
-        int currentRow = 0;  // Mevcut satýr numarasý
-        squares = new Vector3[characterCount];
+    //void SpawnBoxes(int characterCount, GameObject prefab)
+    //{
+    //    int totalBoxes = characterCount; // Toplam kutu sayýsý
+    //    int currentRow = 0;  // Mevcut satýr numarasý
+    //    squares = new Vector3[characterCount];
 
-        for (int i = 0; i < totalBoxes; i++)
-        {
-            // Sýradaki kutunun pozisyonunu belirle
-            //float xPos = (i % maxBoxesPerRow * spacing);
-            float xPos = -(totalBoxes - 1) + i % maxBoxesPerRow * spacing;
-            float zPos = currentRow * spacing -3f;
+    //    for (int i = 0; i < totalBoxes; i++)
+    //    {
+    //        // Sýradaki kutunun pozisyonunu belirle
+    //        //float xPos = (i % maxBoxesPerRow * spacing);
+    //        float xPos = -(totalBoxes - 1) + i % maxBoxesPerRow * spacing;
+    //        float zPos = currentRow * spacing -3f;
 
-            // Spawn edilecek kutunun pozisyonunu belirle
-            Vector3 spawnPosition = new Vector3(xPos, 0f, zPos);
+    //        // Spawn edilecek kutunun pozisyonunu belirle
+    //        Vector3 spawnPosition = new Vector3(xPos, 0f, zPos);
 
-            // Kutuyu spawn et
-            GameObject newBox = Instantiate(prefab, spawnPosition, Quaternion.identity);
-            spawnPosition = new Vector3(xPos, 0f, zPos);
-            squares[i] = spawnPosition;
-            // Bir sýradaki maksimum kutu sayýsýna ulaþýldýysa bir üst satýra geç
-            if ((i + 1) % maxBoxesPerRow == 0)
-            {
-                currentRow--;
-            }
-        }
-    }*/
+    //        // Kutuyu spawn et
+    //        GameObject newBox = Instantiate(prefab, spawnPosition, Quaternion.identity);
+    //        spawnPosition = new Vector3(xPos, 0f, zPos);
+    //        squares[i] = spawnPosition;
+    //        // Bir sýradaki maksimum kutu sayýsýna ulaþýldýysa bir üst satýra geç
+    //        if ((i + 1) % maxBoxesPerRow == 0)
+    //        {
+    //            currentRow--;
+    //        }
+    //    }
+    //}
 
     //1. çözüm
-    /*void SpawnBoxes(int characterCount, GameObject prefab)
+    void SpawnBoxes(int characterCount, GameObject prefab)
     {
         int totalBoxes = characterCount; // Toplam kutu sayýsý
         int currentRow = 2;  // Mevcut satýr numarasý
@@ -171,10 +170,11 @@ public class GameManager : MonoBehaviour
             float zPos = startingZ + (currentRow * spacing);
 
             // Spawn edilecek kutunun pozisyonunu belirle
-            Vector3 spawnPosition = new Vector3(xPos, 0f, zPos);
+            Vector3 spawnPosition = new Vector3(xPos, -0.3f, zPos);
 
             // Kutuyu spawn et
             GameObject newBox = Instantiate(prefab, spawnPosition, Quaternion.identity);
+            spawnPosition = new Vector3(xPos, 0.3f, zPos);
             squares[i] = spawnPosition;
 
             // Bir sýradaki maksimum kutu sayýsýna ulaþýldýysa bir üst satýra geç
@@ -183,7 +183,7 @@ public class GameManager : MonoBehaviour
                 currentRow--;
             }
         }
-    }*/
+    }
 
     // 2.çözüm
     /*void SpawnBoxes(int characterCount, GameObject prefab)
@@ -239,7 +239,7 @@ public class GameManager : MonoBehaviour
 
             stepCount++;
         }
-    }*/
-
+    }
+    */
 
 }
