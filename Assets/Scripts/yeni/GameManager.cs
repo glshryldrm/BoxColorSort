@@ -126,7 +126,7 @@ public class GameManager : MonoBehaviour
             
         }
     }
-    void SpawnBoxes(int characterCount, GameObject prefab)
+    /*void SpawnBoxes(int characterCount, GameObject prefab)
     {
         int totalBoxes = characterCount; // Toplam kutu sayýsý
         int currentRow = 0;  // Mevcut satýr numarasý
@@ -149,9 +149,97 @@ public class GameManager : MonoBehaviour
             // Bir sýradaki maksimum kutu sayýsýna ulaþýldýysa bir üst satýra geç
             if ((i + 1) % maxBoxesPerRow == 0)
             {
-                currentRow++;
+                currentRow--;
             }
         }
-    }
+    }*/
+
+    //1. çözüm
+    /*void SpawnBoxes(int characterCount, GameObject prefab)
+    {
+        int totalBoxes = characterCount; // Toplam kutu sayýsý
+        int currentRow = 2;  // Mevcut satýr numarasý
+        squares = new Vector3[characterCount];
+
+        float startingX = -2.2f; // X pozisyonu baþlangýcý
+        float startingZ = -4f; // Z pozisyonu baþlangýcý
+
+        for (int i = 0; i < totalBoxes; i++)
+        {
+            // Sýradaki kutunun pozisyonunu belirle
+            float xPos = startingX + (i % maxBoxesPerRow * spacing);
+            float zPos = startingZ + (currentRow * spacing);
+
+            // Spawn edilecek kutunun pozisyonunu belirle
+            Vector3 spawnPosition = new Vector3(xPos, 0f, zPos);
+
+            // Kutuyu spawn et
+            GameObject newBox = Instantiate(prefab, spawnPosition, Quaternion.identity);
+            squares[i] = spawnPosition;
+
+            // Bir sýradaki maksimum kutu sayýsýna ulaþýldýysa bir üst satýra geç
+            if ((i + 1) % maxBoxesPerRow == 0)
+            {
+                currentRow--;
+            }
+        }
+    }*/
+
+    // 2.çözüm
+    /*void SpawnBoxes(int characterCount, GameObject prefab)
+    {
+        int totalBoxes = characterCount; // Toplam kutu sayýsý
+        squares = new Vector3[characterCount];
+
+        float startingX = -2.2f; // X pozisyonu baþlangýcý
+        float startingZ = -2f; // Z pozisyonu baþlangýcý
+
+        float currentX = startingX;
+        float currentZ = startingZ;
+        int direction = 1; // Yön: 1 saða, 2 aþaðý, 3 sola, 4 yukarý
+        int stepsUntilChange = 1; // Bir sonraki yöne geçmek için kaç adým gerektiðini belirler
+        int stepCount = 0; // Adým sayýsý
+
+        for (int i = 0; i < totalBoxes; i++)
+        {
+            // Sýradaki kutunun pozisyonunu belirle
+            Vector3 spawnPosition = new Vector3(currentX, 0f, currentZ);
+
+            // Kutuyu spawn et
+            GameObject newBox = Instantiate(prefab, spawnPosition, Quaternion.identity);
+            squares[i] = spawnPosition;
+
+            // Yönü deðiþtirmek için adým sayýsýný kontrol et
+            if (stepCount == stepsUntilChange)
+            {
+                stepCount = 0;
+                if (direction == 1 || direction == 3)
+                {
+                    stepsUntilChange++;
+                }
+                direction = (direction % 4) + 1;
+            }
+
+            // Bir sonraki adýmýn pozisyonunu belirle
+            switch (direction)
+            {
+                case 1: // Saða
+                    currentX += spacing;
+                    break;
+                case 2: // Aþaðý
+                    currentZ -= spacing;
+                    break;
+                case 3: // Sola
+                    currentX -= spacing;
+                    break;
+                case 4: // Yukarý
+                    currentZ += spacing;
+                    break;
+            }
+
+            stepCount++;
+        }
+    }*/
+
 
 }
