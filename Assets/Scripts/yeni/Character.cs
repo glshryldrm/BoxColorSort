@@ -9,6 +9,7 @@ public class Character : MonoBehaviour
     public bool isClicked;
     public bool isClickedAfter;
     public bool isOrganized;
+    public int parentIndex;
     public void SetColor(Color c, int i)
     {
         color = c;
@@ -24,6 +25,7 @@ public class Character : MonoBehaviour
         fx.transform.position = transform.position;
         var mainModule = fx.GetComponent<ParticleSystem>().main;
         mainModule.startColor = color;
+        GameObject.Destroy(fx, mainModule.startLifetime.constant + 1f);
     }
     public bool IsCliked()
     {

@@ -9,45 +9,57 @@ public class GameManager : MonoBehaviour
     public Vector3 squareVector;
     private Color[] generatedColors;
     [HideInInspector] public Vector3[] squares;
+    int maxBoxesPerRow = 5; 
+    bool check = false;
+    Character[] chars;
+    [SerializeField] int squareCount;
     private int emptyIndex = -1;
-    [SerializeField] Color color1;
-    [SerializeField] Color color2;
-    int maxBoxesPerRow = 5; // Bir sýradaki maksimum kutu sayýsý
-
 
     List<Character> _sortedCharacters = new List<Character>();
-    [SerializeField]  List<Character> characters = new List<Character>();
+    [SerializeField] List<GameObject> charParents = new List<GameObject>();
+    [SerializeField] List<ColorPair> colorList = new List<ColorPair>();
+    
+
     void Start()
     {
-        SetCharacterColor();
-        //SpawnSquare(squarePrefab);
-        SpawnBoxes(characters.Count, GameAssets.Instance.squarePrefab);
+        SetCharColorAll();
+        SpawnBoxes(squareCount, GameAssets.Instance.squarePrefab);
     }
 
-    public void SetCharacterColor()
+    public void SetCharacterColor(GameObject gameObject, Color color1, Color color2)
     {
-        ColorHelper.GenerateColors(color1, color2, characters.Count, out generatedColors);
-
-        for (int i = 0; i < characters.Count; i++)
+        chars = new Character[gameObject.GetComponentsInChildren<Character>().Length];
+        chars = gameObject.GetComponentsInChildren<Character>();
+        ColorHelper.GenerateColors(color1, color2, chars.Length, out generatedColors);  
+        for (int i = 0; i < chars.Length; i++)
         {
-           
-           characters[i].SetColor(generatedColors[i], i);
+            
+            chars[i].SetColor(generatedColors[i], i);
 
         }
     }
-
-    public void SpawnSquare(GameObject prefab)
+    void SetCharColorAll()
     {
+        if (charParents.Count == colorList.Count)
+        {
+            for (int i = 0; i < charParents.Count; i++)
+            {
+                if (charParents[i].GetComponentsInChildren<Character>().Length == squareCount)
+                {
+                    SetCharacterColor(charParents[i], colorList[i].color1, colorList[i].color2);
+                    Character[] chars = charParents[i].GetComponentsInChildren<Character>();
+                    for (int j = 0; j < chars.Length; j++)
+                    {
+                        chars[j].parentIndex = i;
+                    }
+                }
+                else
+                    Debug.Log("CharParents child counts is not equal");
+            }
+        }
+        else
+            Debug.Log("CharParents and ColorList counts is not equal");
         
-
-        if (characters.Count<=5)
-        {
-            CalculateLoc(characters.Count, prefab);
-        }
-        else if(characters.Count>5 & characters.Count<=10)
-        {
-            CalculateLoc(characters.Count, prefab);
-        }        
     }
     public void OrganizeCharacter(Character character)
     {
@@ -69,10 +81,10 @@ public class GameManager : MonoBehaviour
             return;
 
         bool isSuccess = true;
-
+        int ParentIndexValue = _sortedCharacters[0].parentIndex;
         for (int i = 0; i < squares.Length; i++)
         {
-            if (_sortedCharacters[i].index != i)
+            if (_sortedCharacters[i].index != i || _sortedCharacters[i].parentIndex != ParentIndexValue)
             {
                 isSuccess = false;
             }
@@ -81,8 +93,15 @@ public class GameManager : MonoBehaviour
         if(isSuccess)
         {
             Debug.Log("Success");
+
+            //if (_sortedCharacters.Count != 0 && check == false)
+            Invoke(nameof(DestroySortedChar), 0.7f);
+
             //Next level
-            LevelManagerr.LoadNextLevel();
+            Invoke(nameof(LoadNextPrivate), 1f);
+            
+            
+           
         }
         else
         {
@@ -90,13 +109,36 @@ public class GameManager : MonoBehaviour
             LevelManagerr.ReloadLevel();
         }
     }
+    void LoadNextPrivate()
+    {
+        if (FindAnyObjectByType<Character>() == null)
+        {
+            LevelManagerr.LoadNextLevel();
+        }
+        else
+        {
+            Debug.Log("Character hala varr");
+        }
+    }
+    void DestroySortedChar()
+    {
+        for (int i = 0; i < _sortedCharacters.Count; i++)
+        {
+            Destroy(_sortedCharacters[i].gameObject);
+            _sortedCharacters[i].CreateFX();
+            SoundManager.PlaySound();
+        }
+        _sortedCharacters.Clear();
+        check = true;
+    }
+    
     void CalculateLoc(int characterCount, GameObject prefab)
     {
         
-        float totalCubeWidth = (characterCount -1) * spacing;      // Toplam kutu geniþliði
-        float startingX = -totalCubeWidth / 2f; // Baþlangýç X pozisyonu
-        float startingY = 1.5f;                   // Y pozisyonu (sabit)
-        float startingZ = -10f;                          // Z pozisyonu (sabit)
+        float totalCubeWidth = (characterCount -1) * spacing;      
+        float startingX = -totalCubeWidth / 2f; 
+        float startingY = 1.5f;                   
+        float startingZ = -10f;                          
         squares = new Vector3[characterCount];
 
 
@@ -125,58 +167,30 @@ public class GameManager : MonoBehaviour
             
         }
     }
-    //void SpawnBoxes(int characterCount, GameObject prefab)
-    //{
-    //    int totalBoxes = characterCount; // Toplam kutu sayýsý
-    //    int currentRow = 0;  // Mevcut satýr numarasý
-    //    squares = new Vector3[characterCount];
-
-    //    for (int i = 0; i < totalBoxes; i++)
-    //    {
-    //        // Sýradaki kutunun pozisyonunu belirle
-    //        //float xPos = (i % maxBoxesPerRow * spacing);
-    //        float xPos = -(totalBoxes - 1) + i % maxBoxesPerRow * spacing;
-    //        float zPos = currentRow * spacing -3f;
-
-    //        // Spawn edilecek kutunun pozisyonunu belirle
-    //        Vector3 spawnPosition = new Vector3(xPos, 0f, zPos);
-
-    //        // Kutuyu spawn et
-    //        GameObject newBox = Instantiate(prefab, spawnPosition, Quaternion.identity);
-    //        spawnPosition = new Vector3(xPos, 0f, zPos);
-    //        squares[i] = spawnPosition;
-    //        // Bir sýradaki maksimum kutu sayýsýna ulaþýldýysa bir üst satýra geç
-    //        if ((i + 1) % maxBoxesPerRow == 0)
-    //        {
-    //            currentRow--;
-    //        }
-    //    }
-    //}
-
-    //1. çözüm
     void SpawnBoxes(int characterCount, GameObject prefab)
     {
-        int totalBoxes = characterCount; // Toplam kutu sayýsý
-        int currentRow = 2;  // Mevcut satýr numarasý
+        float totalBoxes = (characterCount-1) * spacing; // Toplam kutu sayýsý
+        int currentRow = 0;  // Mevcut satýr numarasý
         squares = new Vector3[characterCount];
 
-        float startingX = -2.2f; // X pozisyonu baþlangýcý
-        float startingZ = -4f; // Z pozisyonu baþlangýcý
-
-        for (int i = 0; i < totalBoxes; i++)
+        for (int i = 0; i < characterCount; i++)
         {
             // Sýradaki kutunun pozisyonunu belirle
-            float xPos = startingX + (i % maxBoxesPerRow * spacing);
-            float zPos = startingZ + (currentRow * spacing);
+            //float xPos = (i % maxBoxesPerRow * spacing);
+            float xPos = -(totalBoxes) / 2f + i * spacing;
+            float zPos = currentRow * spacing - 3f;
 
             // Spawn edilecek kutunun pozisyonunu belirle
             Vector3 spawnPosition = new Vector3(xPos, -0.3f, zPos);
 
             // Kutuyu spawn et
-            GameObject newBox = Instantiate(prefab, spawnPosition, Quaternion.identity);
+            Instantiate(prefab, spawnPosition, Quaternion.identity);
             spawnPosition = new Vector3(xPos, 0.3f, zPos);
             squares[i] = spawnPosition;
-
+            if(squares.Length == characterCount)
+            {
+                
+            }
             // Bir sýradaki maksimum kutu sayýsýna ulaþýldýysa bir üst satýra geç
             if ((i + 1) % maxBoxesPerRow == 0)
             {
@@ -184,6 +198,38 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    ////1. çözüm
+    //void SpawnBoxes(int characterCount, GameObject prefab)
+    //{
+    //    int totalBoxes = characterCount; // Toplam kutu sayýsý
+    //    int currentRow = 2;  // Mevcut satýr numarasý
+    //    squares = new Vector3[characterCount];
+
+    //    float startingX = -2.2f; // X pozisyonu baþlangýcý
+    //    float startingZ = -4f; // Z pozisyonu baþlangýcý
+
+    //    for (int i = 0; i < totalBoxes; i++)
+    //    {
+    //        // Sýradaki kutunun pozisyonunu belirle
+    //        float xPos = startingX + (i % maxBoxesPerRow * spacing);
+    //        float zPos = startingZ + (currentRow * spacing);
+
+    //        // Spawn edilecek kutunun pozisyonunu belirle
+    //        Vector3 spawnPosition = new Vector3(xPos, -0.3f, zPos);
+
+    //        // Kutuyu spawn et
+    //        GameObject newBox = Instantiate(prefab, spawnPosition, Quaternion.identity);
+    //        spawnPosition = new Vector3(xPos, 0.3f, zPos);
+    //        squares[i] = spawnPosition;
+
+    //        // Bir sýradaki maksimum kutu sayýsýna ulaþýldýysa bir üst satýra geç
+    //        if ((i + 1) % maxBoxesPerRow == 0)
+    //        {
+    //            currentRow--;
+    //        }
+    //    }
+    //}
 
     // 2.çözüm
     /*void SpawnBoxes(int characterCount, GameObject prefab)
@@ -241,5 +287,5 @@ public class GameManager : MonoBehaviour
         }
     }
     */
-
+   
 }

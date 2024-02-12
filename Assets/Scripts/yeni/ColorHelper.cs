@@ -68,4 +68,12 @@ public class ColorHelper
             colors[i] = lerpedColor;
         }
     }
+    
 }
+[System.Serializable]
+public class ColorPair
+{
+    public Color color1;
+    public Color color2;
+}
+

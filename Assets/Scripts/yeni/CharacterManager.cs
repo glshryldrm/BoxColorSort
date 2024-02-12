@@ -46,7 +46,6 @@ public class CharacterManager : MonoBehaviour
                     if (hit.collider != null)
                     {
                         SoundManager.PlaySound();
-                        //hit.collider.GetComponent<AudioSource>().PlayOneShot(GameAssets.Instance.audioClip);
                         gameManager.OrganizeCharacter(hit.collider.GetComponent<Character>());
                         hit.collider.GetComponent<Character>().ChangeAnimation();
                        
