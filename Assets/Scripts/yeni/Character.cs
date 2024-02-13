@@ -10,13 +10,14 @@ public class Character : MonoBehaviour
     public bool isClickedAfter;
     public bool isOrganized;
     public int parentIndex;
-    public void SetColor(Color c, int i)
+    public void SetColor(Color c, int i, int j)
     {
         color = c;
         color.a = 1f;
         gameObject.GetComponentInChildren<SkinnedMeshRenderer>().materials[0].color = c;
         
         index = i;
+        parentIndex = j;
     }
     
     public void CreateFX()

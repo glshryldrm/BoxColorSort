@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.UI;
 
 public class LevelManagerr : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class LevelManagerr : MonoBehaviour
     {
         //changeLevelName();
         changeName();
+        
     }
     public void ReloadLevel()
     {
@@ -55,7 +57,7 @@ public class LevelManagerr : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
-    void ReloadLevelPrivate()
+    public void ReloadLevelPrivate()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }

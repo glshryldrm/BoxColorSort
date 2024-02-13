@@ -7,6 +7,7 @@ public class CharacterManager : MonoBehaviour
     private Camera cam;
     [SerializeField] LayerMask layer;
     [SerializeField] GameManager gameManager;
+    public static bool touchCheck = true;
     
 
     void Start()
@@ -28,27 +29,31 @@ public class CharacterManager : MonoBehaviour
     private void MoveWithRay()
     {
         
-        if (Input.touchCount > 0)
+        if (touchCheck)
         {
-            // Ýlk dokunma olayýný al
-            Touch touch = Input.GetTouch(0);
-            
-
-            // Dokunma baþladýysa
-            if (touch.phase == TouchPhase.Began)
+            if (Input.touchCount > 0)
             {
-                
-                Ray ray = cam.ScreenPointToRay(touch.position);
-                RaycastHit hit;
-               
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity, layer))
+                // Ýlk dokunma olayýný al
+
+                Touch touch = Input.GetTouch(0);
+
+                // Dokunma baþladýysa
+                if (touch.phase == TouchPhase.Began)
                 {
-                    if (hit.collider != null)
+
+                    Ray ray = cam.ScreenPointToRay(touch.position);
+                    RaycastHit hit;
+
+                    if (Physics.Raycast(ray, out hit, Mathf.Infinity, layer))
                     {
-                        SoundManager.PlaySound();
-                        gameManager.OrganizeCharacter(hit.collider.GetComponent<Character>());
-                        hit.collider.GetComponent<Character>().ChangeAnimation();
-                       
+                        if (hit.collider != null)
+                        {
+                            SoundManager.PlaySound();
+                            gameManager.OrganizeCharacter(hit.collider.GetComponent<Character>());
+                            hit.collider.GetComponent<Character>().ChangeAnimation();
+                            touch.phase = TouchPhase.Ended;
+
+                        }
                     }
                 }
             }

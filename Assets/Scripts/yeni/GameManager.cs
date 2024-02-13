@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float spacing = 1.5f;
     public Vector3 squareVector;
     private Color[] generatedColors;
-    [HideInInspector] public Vector3[] squares;
+    [HideInInspector] public List<Vector3> squares = new List<Vector3>();
     int maxBoxesPerRow = 5; 
     bool check = false;
     Character[] chars;
@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < chars.Length; i++)
         {
             
-            chars[i].SetColor(generatedColors[i], i);
+            chars[i].SetColor(generatedColors[i], i, charParents.IndexOf(gameObject));
 
         }
     }
@@ -47,11 +47,6 @@ public class GameManager : MonoBehaviour
                 if (charParents[i].GetComponentsInChildren<Character>().Length == squareCount)
                 {
                     SetCharacterColor(charParents[i], colorList[i].color1, colorList[i].color2);
-                    Character[] chars = charParents[i].GetComponentsInChildren<Character>();
-                    for (int j = 0; j < chars.Length; j++)
-                    {
-                        chars[j].parentIndex = i;
-                    }
                 }
                 else
                     Debug.Log("CharParents child counts is not equal");
@@ -65,38 +60,42 @@ public class GameManager : MonoBehaviour
     {
         if (_sortedCharacters.Contains(character))
             return;
-        character.CreateFX();
-        emptyIndex = (emptyIndex + 1) % squares.Length;
-        character.transform.position = squares[emptyIndex];
+
+        emptyIndex = (emptyIndex + 1) % squares.Count;
+        if (_sortedCharacters.Count != squareCount)
+        {
+            character.transform.position = squares[emptyIndex];
+            character.CreateFX();
+            _sortedCharacters.Add(character);
+        }
         //character.GetComponent<Rigidbody>().isKinematic = true;
         //character.GetComponent<Collider>().enabled = false;
-        _sortedCharacters.Add(character);
-
         CheckLevelComplate();
     }
 
     void CheckLevelComplate()
     {
-        if (squares.Length != _sortedCharacters.Count)
+        if (squares.Count != _sortedCharacters.Count)
             return;
 
         bool isSuccess = true;
         int ParentIndexValue = _sortedCharacters[0].parentIndex;
-        for (int i = 0; i < squares.Length; i++)
+        for (int i = 0; i < squares.Count; i++)
         {
             if (_sortedCharacters[i].index != i || _sortedCharacters[i].parentIndex != ParentIndexValue)
             {
                 isSuccess = false;
             }
         }
-
-        if(isSuccess)
+        if (isSuccess)
         {
             Debug.Log("Success");
 
             //if (_sortedCharacters.Count != 0 && check == false)
+            CharacterManager.touchCheck = false;
             Invoke(nameof(DestroySortedChar), 0.7f);
-
+            Invoke(nameof(SetTouchCheck), 0.7f);
+            
             //Next level
             Invoke(nameof(LoadNextPrivate), 1f);
             
@@ -131,7 +130,10 @@ public class GameManager : MonoBehaviour
         _sortedCharacters.Clear();
         check = true;
     }
-    
+    void SetTouchCheck()
+    {
+        CharacterManager.touchCheck = true;
+    }
     void CalculateLoc(int characterCount, GameObject prefab)
     {
         
@@ -139,7 +141,6 @@ public class GameManager : MonoBehaviour
         float startingX = -totalCubeWidth / 2f; 
         float startingY = 1.5f;                   
         float startingZ = -10f;                          
-        squares = new Vector3[characterCount];
 
 
         for (int i = 0; i < characterCount; i++)
@@ -171,7 +172,6 @@ public class GameManager : MonoBehaviour
     {
         float totalBoxes = (characterCount-1) * spacing; // Toplam kutu sayýsý
         int currentRow = 0;  // Mevcut satýr numarasý
-        squares = new Vector3[characterCount];
 
         for (int i = 0; i < characterCount; i++)
         {
@@ -181,20 +181,14 @@ public class GameManager : MonoBehaviour
             float zPos = currentRow * spacing - 3f;
 
             // Spawn edilecek kutunun pozisyonunu belirle
-            Vector3 spawnPosition = new Vector3(xPos, -0.3f, zPos);
+            Vector3 spawnPosition = new Vector3(xPos, -0.3f, zPos); 
 
             // Kutuyu spawn et
             Instantiate(prefab, spawnPosition, Quaternion.identity);
             spawnPosition = new Vector3(xPos, 0.3f, zPos);
-            squares[i] = spawnPosition;
-            if(squares.Length == characterCount)
+            if (squares.Count != squareCount)
             {
-                
-            }
-            // Bir sýradaki maksimum kutu sayýsýna ulaþýldýysa bir üst satýra geç
-            if ((i + 1) % maxBoxesPerRow == 0)
-            {
-                currentRow--;
+                squares.Add(spawnPosition);
             }
         }
     }

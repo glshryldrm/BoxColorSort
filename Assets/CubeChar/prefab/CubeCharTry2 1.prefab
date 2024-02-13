@@ -234,6 +234,7 @@ MonoBehaviour:
   isClicked: 0
   isClickedAfter: 0
   isOrganized: 0
+  parentIndex: 0
 --- !u!65 &4305442934217137296
 BoxCollider:
   m_ObjectHideFlags: 0
