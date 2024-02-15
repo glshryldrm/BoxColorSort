@@ -3503,8 +3503,8 @@ MonoBehaviour:
     color2: {r: 1, g: 0.71132076, b: 0.8971402, a: 1}
   - color1: {r: 0.6037736, g: 0.36464134, b: 0, a: 1}
     color2: {r: 1, g: 0.7756405, b: 0.1830188, a: 1}
-  - color1: {r: 0, g: 0.5728173, b: 0.5849056, a: 1}
-    color2: {r: 0.29622638, g: 1, b: 0.85969055, a: 1}
+  - color1: {r: 0, g: 0.471445, b: 0.4811321, a: 1}
+    color2: {r: 0.5415094, g: 1, b: 0.90778965, a: 1}
 --- !u!114 &1483222728
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3909,7 +3909,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 277505802409462546, guid: 24c0dc4c98c7ffa46a317dfb0f45e117, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 617616168534512040, guid: 24c0dc4c98c7ffa46a317dfb0f45e117, type: 3}
       propertyPath: m_RootOrder
@@ -3953,6 +3953,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 617616168534512040, guid: 24c0dc4c98c7ffa46a317dfb0f45e117, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1087777499891693117, guid: 24c0dc4c98c7ffa46a317dfb0f45e117, type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

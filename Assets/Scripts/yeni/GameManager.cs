@@ -9,12 +9,9 @@ public class GameManager : MonoBehaviour
     public Vector3 squareVector;
     private Color[] generatedColors;
     [HideInInspector] public List<Vector3> squares = new List<Vector3>();
-    int maxBoxesPerRow = 5; 
-    bool check = false;
     Character[] chars;
     [SerializeField] int squareCount;
     private int emptyIndex = -1;
-
     List<Character> _sortedCharacters = new List<Character>();
     [SerializeField] List<GameObject> charParents = new List<GameObject>();
     [SerializeField] List<ColorPair> colorList = new List<ColorPair>();
@@ -24,6 +21,12 @@ public class GameManager : MonoBehaviour
     {
         SetCharColorAll();
         SpawnBoxes(squareCount, GameAssets.Instance.squarePrefab);
+    }
+    private void Awake()
+    {
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 60;
+
     }
 
     public void SetCharacterColor(GameObject gameObject, Color color1, Color color2)
@@ -105,7 +108,11 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.Log("Failed");
-            LevelManagerr.ReloadLevel();
+            CharacterManager.touchCheck = false;
+            Invoke(nameof(ReloadCharacters), 0.7f);
+            Invoke(nameof(DestroySortedChar), 0.7f);
+            Invoke(nameof(SetTouchCheck), 0.7f);
+            //LevelManagerr.ReloadLevel();
         }
     }
     void LoadNextPrivate()
@@ -128,11 +135,23 @@ public class GameManager : MonoBehaviour
             SoundManager.PlaySound();
         }
         _sortedCharacters.Clear();
-        check = true;
     }
     void SetTouchCheck()
     {
         CharacterManager.touchCheck = true;
+    }
+    void ReloadCharacters()
+    {
+        float xStartPos = -1.7f;
+        float yStartPos = 4f;
+        for (int i = 0; i < squareCount; i++)
+        {
+            float xPos = xStartPos+ (i*0.6f);
+            Vector3 vector = new Vector3(xPos, yStartPos, -0.5f);
+            GameObject spawnChar = Instantiate(_sortedCharacters[i].gameObject, vector, Quaternion.identity);
+            spawnChar.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+        }
+        
     }
     void CalculateLoc(int characterCount, GameObject prefab)
     {

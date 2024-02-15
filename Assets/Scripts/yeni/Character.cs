@@ -25,7 +25,7 @@ public class Character : MonoBehaviour
         GameObject fx =  Instantiate(GameAssets.Instance.particlePrefab);
         fx.transform.position = transform.position;
         var mainModule = fx.GetComponent<ParticleSystem>().main;
-        mainModule.startColor = color;
+        mainModule.startColor = gameObject.GetComponentInChildren<SkinnedMeshRenderer>().materials[0].color;
         GameObject.Destroy(fx, mainModule.startLifetime.constant + 1f);
     }
     public bool IsCliked()

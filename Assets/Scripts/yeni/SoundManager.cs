@@ -8,6 +8,6 @@ static class SoundManager
         GameObject soundObj = new GameObject("Sound");
         AudioSource audioSource = soundObj.AddComponent<AudioSource>();
         audioSource.PlayOneShot(GameAssets.Instance.audioClip);
-        GameObject.DestroyObject(soundObj, GameAssets.Instance.audioClip.length +1f);
+        GameObject.Destroy(soundObj, GameAssets.Instance.audioClip.length +1f);
     }
 }
