@@ -10,6 +10,7 @@ public class Character : MonoBehaviour
     public bool isClickedAfter;
     public bool isOrganized;
     public int parentIndex;
+
     public void SetColor(Color c, int i, int j)
     {
         color = c;

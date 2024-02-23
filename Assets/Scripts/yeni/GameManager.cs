@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private LevelManagerr LevelManagerr;
+    [SerializeField] private GridManager gridManager;
     [SerializeField] private float spacing = 1.5f;
     public Vector3 squareVector;
     private Color[] generatedColors;
@@ -63,7 +64,12 @@ public class GameManager : MonoBehaviour
     {
         if (_sortedCharacters.Contains(character))
             return;
-
+        gridManager.EmptyGrids.Clear();
+        for (int i = 0; i < _sortedCharacters.Count; i++)
+        {
+            gridManager.TurnToEmptyGrid(character.transform.position);
+        }
+        gridManager.FindEmptyGrid();
         emptyIndex = (emptyIndex + 1) % squares.Count;
         if (_sortedCharacters.Count != squareCount)
         {
@@ -71,9 +77,11 @@ public class GameManager : MonoBehaviour
             character.CreateFX();
             _sortedCharacters.Add(character);
         }
-        //character.GetComponent<Rigidbody>().isKinematic = true;
+        character.GetComponent<Rigidbody>().useGravity = true;
         //character.GetComponent<Collider>().enabled = false;
+
         CheckLevelComplate();
+
     }
 
     void CheckLevelComplate()
@@ -130,10 +138,12 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < _sortedCharacters.Count; i++)
         {
+            _sortedCharacters[i].GetComponent<Rigidbody>().useGravity = false;
             Destroy(_sortedCharacters[i].gameObject);
             _sortedCharacters[i].CreateFX();
             SoundManager.PlaySound();
         }
+
         _sortedCharacters.Clear();
     }
     void SetTouchCheck()
@@ -147,11 +157,20 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < squareCount; i++)
         {
             float xPos = xStartPos+ (i*0.6f);
-            Vector3 vector = new Vector3(xPos, yStartPos, -0.5f);
+            //Vector3 vector = new Vector3(xPos, yStartPos, -0.5f);
+            Vector3 vector = gridManager.EmptyGrids[i];
+            gridManager.EmptyGrids.Clear();
+            gridManager.FindEmptyGrid();
+
             GameObject spawnChar = Instantiate(_sortedCharacters[i].gameObject, vector, Quaternion.identity);
+            
+            spawnChar.GetComponent<Character>().CreateFX();
             spawnChar.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
+            
+            gridManager.FindEmptyGrid();
+
+
         }
-        
     }
     void CalculateLoc(int characterCount, GameObject prefab)
     {
