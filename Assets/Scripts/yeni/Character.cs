@@ -9,6 +9,7 @@ public class Character : MonoBehaviour
     public bool isClicked;
     public bool isClickedAfter;
     public bool isOrganized;
+    public bool isSpawned;
     public int parentIndex;
 
     public void SetColor(Color c, int i, int j)
@@ -41,6 +42,10 @@ public class Character : MonoBehaviour
     {
         return isOrganized;
     }
+    public bool IsSpawned()
+    {
+        return isSpawned;
+    }
     public void ChangeAnimation()
     {
         if (index == 0)
@@ -59,5 +64,9 @@ public class Character : MonoBehaviour
         {
             chars[i].isOrganized = true;
         }
+    }
+    public void SpawnedAnimation()
+    {
+        isSpawned = true;
     }
 }

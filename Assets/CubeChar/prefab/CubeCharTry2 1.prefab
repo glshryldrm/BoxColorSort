@@ -205,7 +205,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 277505802409462546}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 3680ef8c18c50f3428cb8c1aaf311f31, type: 3}
   m_Controller: {fileID: 9100000, guid: 9dec935fb6023cf4ea6a0f447695f5c1, type: 2}
   m_CullingMode: 0
@@ -234,6 +234,7 @@ MonoBehaviour:
   isClicked: 0
   isClickedAfter: 0
   isOrganized: 0
+  isSpawned: 0
   parentIndex: 0
 --- !u!65 &4305442934217137296
 BoxCollider:

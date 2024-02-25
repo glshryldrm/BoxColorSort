@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     List<Character> _sortedCharacters = new List<Character>();
     [SerializeField] List<GameObject> charParents = new List<GameObject>();
     [SerializeField] List<ColorPair> colorList = new List<ColorPair>();
-    
+
 
     void Start()
     {
@@ -34,10 +34,10 @@ public class GameManager : MonoBehaviour
     {
         chars = new Character[gameObject.GetComponentsInChildren<Character>().Length];
         chars = gameObject.GetComponentsInChildren<Character>();
-        ColorHelper.GenerateColors(color1, color2, chars.Length, out generatedColors);  
+        ColorHelper.GenerateColors(color1, color2, chars.Length, out generatedColors);
         for (int i = 0; i < chars.Length; i++)
         {
-            
+
             chars[i].SetColor(generatedColors[i], i, charParents.IndexOf(gameObject));
 
         }
@@ -58,18 +58,15 @@ public class GameManager : MonoBehaviour
         }
         else
             Debug.Log("CharParents and ColorList counts is not equal");
-        
+
     }
     public void OrganizeCharacter(Character character)
     {
         if (_sortedCharacters.Contains(character))
             return;
-        gridManager.EmptyGrids.Clear();
-        for (int i = 0; i < _sortedCharacters.Count; i++)
-        {
-            gridManager.TurnToEmptyGrid(character.transform.position);
-        }
-        gridManager.FindEmptyGrid();
+
+        gridManager.TurnToEmptyGrid(character.transform.position);
+
         emptyIndex = (emptyIndex + 1) % squares.Count;
         if (_sortedCharacters.Count != squareCount)
         {
@@ -106,19 +103,21 @@ public class GameManager : MonoBehaviour
             CharacterManager.touchCheck = false;
             Invoke(nameof(DestroySortedChar), 0.7f);
             Invoke(nameof(SetTouchCheck), 0.7f);
-            
+
             //Next level
             Invoke(nameof(LoadNextPrivate), 1f);
-            
-            
-           
+
+
+
         }
         else
         {
             Debug.Log("Failed");
             CharacterManager.touchCheck = false;
+
             Invoke(nameof(ReloadCharacters), 0.7f);
             Invoke(nameof(DestroySortedChar), 0.7f);
+
             Invoke(nameof(SetTouchCheck), 0.7f);
             //LevelManagerr.ReloadLevel();
         }
@@ -138,13 +137,12 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < _sortedCharacters.Count; i++)
         {
-            _sortedCharacters[i].GetComponent<Rigidbody>().useGravity = false;
             Destroy(_sortedCharacters[i].gameObject);
             _sortedCharacters[i].CreateFX();
             SoundManager.PlaySound();
         }
-
         _sortedCharacters.Clear();
+
     }
     void SetTouchCheck()
     {
@@ -152,33 +150,29 @@ public class GameManager : MonoBehaviour
     }
     void ReloadCharacters()
     {
-        float xStartPos = -1.7f;
-        float yStartPos = 4f;
         for (int i = 0; i < squareCount; i++)
         {
-            float xPos = xStartPos+ (i*0.6f);
-            //Vector3 vector = new Vector3(xPos, yStartPos, -0.5f);
-            Vector3 vector = gridManager.EmptyGrids[i];
-            gridManager.EmptyGrids.Clear();
-            gridManager.FindEmptyGrid();
+            _sortedCharacters[i].GetComponent<Rigidbody>().useGravity = false;
 
+            Vector3 vector = gridManager.EmptyGrids[i];
             GameObject spawnChar = Instantiate(_sortedCharacters[i].gameObject, vector, Quaternion.identity);
-            
-            spawnChar.GetComponent<Character>().CreateFX();
-            spawnChar.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-            
-            gridManager.FindEmptyGrid();
+            spawnChar.GetComponent<Character>().SpawnedAnimation();
+            spawnChar.GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);
+            //spawnChar.GetComponent<Character>().CreateFX();
+
+            gridManager.TurnToFullGrid(vector);
 
 
         }
+        gridManager.FindEmptyGrid();
     }
     void CalculateLoc(int characterCount, GameObject prefab)
     {
-        
-        float totalCubeWidth = (characterCount -1) * spacing;      
-        float startingX = -totalCubeWidth / 2f; 
-        float startingY = 1.5f;                   
-        float startingZ = -10f;                          
+
+        float totalCubeWidth = (characterCount - 1) * spacing;
+        float startingX = -totalCubeWidth / 2f;
+        float startingY = 1.5f;
+        float startingZ = -10f;
 
 
         for (int i = 0; i < characterCount; i++)
@@ -195,7 +189,7 @@ public class GameManager : MonoBehaviour
             }
             else if (i >= 5)
             {
-                float xPos = startingX - (characterCount/2) + i * spacing ;
+                float xPos = startingX - (characterCount / 2) + i * spacing;
                 float yPos = startingY;
                 float zPos = startingZ - 2f;
                 squareVector = new Vector3(xPos, yPos, zPos);
@@ -203,12 +197,12 @@ public class GameManager : MonoBehaviour
                 squareVector = new Vector3(xPos, yPos + 1f, zPos);
                 squares[i] = squareVector;
             }
-            
+
         }
     }
     void SpawnBoxes(int characterCount, GameObject prefab)
     {
-        float totalBoxes = (characterCount-1) * spacing; // Toplam kutu sayýsý
+        float totalBoxes = (characterCount - 1) * spacing; // Toplam kutu sayýsý
         int currentRow = 0;  // Mevcut satýr numarasý
 
         for (int i = 0; i < characterCount; i++)
@@ -219,7 +213,7 @@ public class GameManager : MonoBehaviour
             float zPos = currentRow * spacing - 3f;
 
             // Spawn edilecek kutunun pozisyonunu belirle
-            Vector3 spawnPosition = new Vector3(xPos, -0.3f, zPos); 
+            Vector3 spawnPosition = new Vector3(xPos, -0.3f, zPos);
 
             // Kutuyu spawn et
             Instantiate(prefab, spawnPosition, Quaternion.identity);
@@ -319,5 +313,5 @@ public class GameManager : MonoBehaviour
         }
     }
     */
-   
+
 }

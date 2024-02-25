@@ -7,6 +7,7 @@ public class CharacterAnimator : MonoBehaviour
     private const string IS_CLICKED = "isClicked";
     private const string IS_CLICKED_AFTER = "isClickedAfter";
     private const string IS_ORGANIZED = "isOrganized";
+    private const string IS_SPAWNED = "isSpawned";
 
 
     [SerializeField] private Character character;
@@ -22,6 +23,7 @@ public class CharacterAnimator : MonoBehaviour
         animator.SetBool(IS_CLICKED, character.IsCliked());
         animator.SetBool(IS_CLICKED_AFTER, character.IsClickedAfter());
         animator.SetBool(IS_ORGANIZED, character.IsOrganized());
+        animator.SetBool(IS_SPAWNED, character.IsSpawned());
     }
     
 }

@@ -36,12 +36,31 @@ public class GridManager : MonoBehaviour
     }
     private void OnDrawGizmos()
     {
+        Vector3 vector1 = new Vector3(0f, 0f, 0f);
         Vector3 vector2 = new Vector3(characterX, characterY, 0.6f);
+        Vector3[] charPos = new Vector3[49];
         Gizmos.color = Color.blue;
+        int y = 0;
+        for (float i = 0; i < 3.6; i += 0.6f)
+        {
+            for (float j = 0; j < 3.6; j += 0.6f)
+            {
+
+                vector1.x = j;
+                vector1.y = i;
+                vector1.z = -0.5f;
+
+                charPosX = (gameObject.transform.position.x + vector1.x);
+                charPosY = (gameObject.transform.position.y + vector1.y) + 0.3f;
+
+                charPos[y] = new Vector3(charPosX, charPosY, -0.5f);
+                y++;
+            }
+        }
         for (int i = 0; i < 49; i++)
         {
-
-            Gizmos.DrawWireCube(charPosV2[i], vector2);
+            Vector3 vector = new Vector3(charPos[i].x, charPos[i].y, -0.5f);
+            Gizmos.DrawWireCube(vector, vector2);
 
         }
     }
@@ -113,6 +132,7 @@ public class GridManager : MonoBehaviour
         for (int i = 0; i < charGO.Length; i++)
         {
             charGO[i].transform.position = EmptyGrids[i];
+            charGO[i].SpawnedAnimation();
             CheckGrids(charGO[i]);
         }
     }
@@ -123,6 +143,7 @@ public class GridManager : MonoBehaviour
             if (vector == charPosV2[i])
             {
                 gridTypes[i] = GridType.full;
+                break;
             }
         }
     }
@@ -133,7 +154,9 @@ public class GridManager : MonoBehaviour
             if (vector == charPosV2[i])
             {
                 gridTypes[i] = GridType.empty;
+                break;
             }
         }
+        FindEmptyGrid();
     }
 }
