@@ -71,6 +71,7 @@ public class GameManager : MonoBehaviour
         if (_sortedCharacters.Count != squareCount)
         {
             character.transform.position = squares[emptyIndex];
+            SoundManager.PlaySound();
             character.CreateFX();
             _sortedCharacters.Add(character);
         }
@@ -150,6 +151,7 @@ public class GameManager : MonoBehaviour
     }
     void ReloadCharacters()
     {
+        gridManager.FindEmptyGrid();
         for (int i = 0; i < squareCount; i++)
         {
             _sortedCharacters[i].GetComponent<Rigidbody>().useGravity = false;

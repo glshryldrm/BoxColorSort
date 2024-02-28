@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Timers;
 
 public class CharacterManager : MonoBehaviour
 {
@@ -21,8 +22,8 @@ public class CharacterManager : MonoBehaviour
 
     void Update()
     {
-
-        MoveWithRay();
+        Invoke(nameof(MoveWithRay), 0.5f);
+        //MoveWithRay();
 
     }
 
@@ -48,10 +49,11 @@ public class CharacterManager : MonoBehaviour
                     {
                         if (hit.collider != null)
                         {
-                            SoundManager.PlaySound();
+                            
                             gameManager.OrganizeCharacter(hit.collider.GetComponent<Character>());
                             hit.collider.GetComponent<Character>().ChangeAnimation();
                             touch.phase = TouchPhase.Ended;
+                            
 
                         }
                     }

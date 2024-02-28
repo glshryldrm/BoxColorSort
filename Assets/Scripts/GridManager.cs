@@ -9,12 +9,7 @@ public class GridManager : MonoBehaviour
     float charPosX;
     float charPosY;
     Vector3[] charPosV2;
-    Vector3[] deadGrids = {new Vector3(-1.83f, 1.7f, -0.5f),
-                new Vector3(-1.83f, 2.3f, -0.5f),
-                new Vector3(-1.17f, 1.7f, -0.5f),
-                new Vector3(-1.17f, 2.3f, -0.5f)};
-    GridType[] gridTypes;
-    [SerializeField] LayerMask charLayer;
+    [SerializeField] GridType[] gridTypes;
     public List<Vector3> EmptyGrids = new List<Vector3>();
 
     public enum GridType
@@ -140,10 +135,9 @@ public class GridManager : MonoBehaviour
     {
         for (int i = 0; i < charPosV2.Length; i++)
         {
-            if (vector == charPosV2[i])
+            if (vector == charPosV2[i] && gridTypes[i] == GridType.empty)
             {
                 gridTypes[i] = GridType.full;
-                break;
             }
         }
     }
@@ -151,12 +145,17 @@ public class GridManager : MonoBehaviour
     {
         for (int i = 0; i < charPosV2.Length; i++)
         {
-            if (vector == charPosV2[i])
+            //float charX = charPosV2[i].x;
+            //float charY = charPosV2[i].y;
+            //if (vector.x == charX && (vector.y >= charY || vector.y <= charY + 0.2f))
+            //{
+            //    gridTypes[i] = GridType.empty;
+            //    break;
+            //}
+            if (vector == charPosV2[i] && gridTypes[i] == GridType.full)
             {
                 gridTypes[i] = GridType.empty;
-                break;
             }
         }
-        FindEmptyGrid();
     }
 }
