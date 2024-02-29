@@ -4,25 +4,17 @@ using System.Collections.Generic;
 
 public class GridManager : MonoBehaviour
 {
-    float characterX = 0.6f;
-    float characterY = 0.6f;
-    float charPosX;
-    float charPosY;
-    Vector3[] charPosV2;
-    [SerializeField] GridType[] gridTypes;
-    public List<Vector3> EmptyGrids = new List<Vector3>();
+    float gridX = 0.6f;
+    float gridY = 0.6f;
+    [SerializeField] int height;
+    [SerializeField] int width;
+    Vector3[,] gridMatrix;
+    Grid[] grids;
 
-    public enum GridType
-    {
-        full,
-        empty,
-        dead
-    };
     private void Start()
     {
-        CalculateLoc(out charPosV2);
-        FindEmptyGrid();
-        FindCharAddToGrid();
+        CalculateGrid();
+        FindCharacterOnScene();
 
     }
     private void Update()
@@ -31,131 +23,88 @@ public class GridManager : MonoBehaviour
     }
     private void OnDrawGizmos()
     {
-        Vector3 vector1 = new Vector3(0f, 0f, 0f);
-        Vector3 vector2 = new Vector3(characterX, characterY, 0.6f);
-        Vector3[] charPos = new Vector3[49];
-        Gizmos.color = Color.blue;
-        int y = 0;
-        for (float i = 0; i < 3.6; i += 0.6f)
+        Gizmos.color = Color.red;
+        for (int i = 0; i < height; i++)
         {
-            for (float j = 0; j < 3.6; j += 0.6f)
+            for (int j = 0; j < width; j++)
             {
 
-                vector1.x = j;
-                vector1.y = i;
-                vector1.z = -0.5f;
-
-                charPosX = (gameObject.transform.position.x + vector1.x);
-                charPosY = (gameObject.transform.position.y + vector1.y) + 0.3f;
-
-                charPos[y] = new Vector3(charPosX, charPosY, -0.5f);
-                y++;
+                Gizmos.DrawWireCube(gridMatrix[i, j], new Vector3(gridX, gridY, 0.6f));
             }
         }
-        for (int i = 0; i < 49; i++)
-        {
-            Vector3 vector = new Vector3(charPos[i].x, charPos[i].y, -0.5f);
-            Gizmos.DrawWireCube(vector, vector2);
-
-        }
     }
-    void CalculateLoc(out Vector3[] charPos)
+    void CalculateGrid()
     {
-        Vector3 vector1 = new Vector3(0f, 0f, 0f);
-        charPos = new Vector3[49];
-        gridTypes = new GridType[49];
-        int y = 0;
-
-        for (float i = 0; i < 3.6; i += 0.6f)
+        gridMatrix = new Vector3[height, width];
+        grids = new Grid[height * width];
+        int i = 0;
+        for (int y = 0; y < height; y++)
         {
-            for (float j = 0; j < 3.6; j += 0.6f)
+            for (int x = 0; x < width; x++)
             {
-
-                vector1.x = j;
-                vector1.y = i;
-                vector1.z = -0.5f;
-
-                charPosX = (gameObject.transform.position.x + vector1.x);
-                charPosY = (gameObject.transform.position.y + vector1.y);
-
-                charPos[y] = new Vector3(charPosX, charPosY, -0.5f);
-
-
-                if (y == 14 || y == 20 || y == 21 || y == 27)
-                {
-                    gridTypes[y] = GridType.dead;
-                }
-                else
-                {
-                    gridTypes[y] = GridType.empty;
-                }
-
-                //Debug.Log(charPos[y]);
-                y++;
+                gridMatrix[x, y] = new Vector3(transform.position.x + gridX * x, transform.position.y + gridY * y, -0.5f);
+                grids[i] = new Grid(x, y, null);
+                grids[i].vector = gridMatrix[x, y];
+                i++;
             }
         }
 
     }
-    public void FindEmptyGrid()
+    public Vector3 GridCheck(Character character)
     {
-        EmptyGrids.Clear();
-        for (int i = 0; i < charPosV2.Length; i++)
+        for (int i = 0; i < grids.Length; i++)
         {
-            if (gridTypes[i] == GridType.empty)
+            if (grids[i].character == null)
             {
-                EmptyGrids.Add(charPosV2[i]);
+                grids[i].character = character;
+                return grids[i].vector;
+            }
+            else
+            {
+                Debug.Log("Empty grid is not found");
+            }
+        }
+        return new Vector3(0f, 0f, 0f);
+    }
+    public void TurnNullCharacter(Character character)
+    {
+        for (int i = 0; i < grids.Length; i++)
+        {
+            if (grids[i].character == character)
+            {
+                grids[i].character = null;
             }
         }
     }
-
-    void CheckGrids(Character character)
+    public void DedectCharacterGrid(Character character,out float x,out float y)
     {
-        Vector3 characterPos = character.gameObject.transform.position;
-        for (int i = 0; i < charPosV2.Length; i++)
-        {
-
-            if (characterPos == charPosV2[i] && gridTypes[i] == GridType.empty)
-            {
-                gridTypes[i] = GridType.full;
-                return;
-            }
-        }
+        x = character.transform.position.x / gridX;
+        y = character.transform.position.y / gridY;
     }
-    void FindCharAddToGrid()
+    void FindCharacterOnScene()
     {
-        Character[] charGO = FindObjectsOfType<Character>();
-        for (int i = 0; i < charGO.Length; i++)
+        Character[] chars = FindObjectsOfType<Character>();
+        for (int i = 0; i < chars.Length; i++)
         {
-            charGO[i].transform.position = EmptyGrids[i];
-            charGO[i].SpawnedAnimation();
-            CheckGrids(charGO[i]);
-        }
-    }
-    public void TurnToFullGrid(Vector3 vector)
-    {
-        for (int i = 0; i < charPosV2.Length; i++)
-        {
-            if (vector == charPosV2[i] && gridTypes[i] == GridType.empty)
-            {
-                gridTypes[i] = GridType.full;
-            }
-        }
-    }
-    public void TurnToEmptyGrid(Vector3 vector)
-    {
-        for (int i = 0; i < charPosV2.Length; i++)
-        {
-            //float charX = charPosV2[i].x;
-            //float charY = charPosV2[i].y;
-            //if (vector.x == charX && (vector.y >= charY || vector.y <= charY + 0.2f))
+            //if(grids[i].character == null)
             //{
-            //    gridTypes[i] = GridType.empty;
-            //    break;
+            grids[i].character = chars[i];
+            chars[i].transform.position = grids[i].vector;
+            chars[i].SpawnedAnimation();
             //}
-            if (vector == charPosV2[i] && gridTypes[i] == GridType.full)
-            {
-                gridTypes[i] = GridType.empty;
-            }
         }
+    }
+}
+class Grid
+{
+    public int x;
+    public int y;
+    public Character character;
+    public Vector3 vector;
+    public Grid(int x, int y, Character character)
+    {
+        this.x = x;
+        this.y = y;
+        this.character = character;
     }
 }

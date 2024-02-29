@@ -65,7 +65,11 @@ public class GameManager : MonoBehaviour
         if (_sortedCharacters.Contains(character))
             return;
 
-        gridManager.TurnToEmptyGrid(character.transform.position);
+        //gridManager.TurnToEmptyGrid(character.transform.position);
+        for (int i = 0; i < _sortedCharacters.Count; i++)
+        {
+            gridManager.TurnNullCharacter(character);
+        }
 
         emptyIndex = (emptyIndex + 1) % squares.Count;
         if (_sortedCharacters.Count != squareCount)
@@ -151,22 +155,23 @@ public class GameManager : MonoBehaviour
     }
     void ReloadCharacters()
     {
-        gridManager.FindEmptyGrid();
+        //gridManager.FindEmptyGrid();
         for (int i = 0; i < squareCount; i++)
         {
             _sortedCharacters[i].GetComponent<Rigidbody>().useGravity = false;
 
-            Vector3 vector = gridManager.EmptyGrids[i];
+            
+            Vector3 vector = gridManager.GridCheck(_sortedCharacters[i]);
             GameObject spawnChar = Instantiate(_sortedCharacters[i].gameObject, vector, Quaternion.identity);
             spawnChar.GetComponent<Character>().SpawnedAnimation();
             spawnChar.GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);
             //spawnChar.GetComponent<Character>().CreateFX();
 
-            gridManager.TurnToFullGrid(vector);
+            //gridManager.TurnToFullGrid(vector);
 
 
         }
-        gridManager.FindEmptyGrid();
+        //gridManager.FindEmptyGrid();
     }
     void CalculateLoc(int characterCount, GameObject prefab)
     {
