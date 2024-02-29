@@ -32,14 +32,14 @@ public class GameManager : MonoBehaviour
 
     public void SetCharacterColor(GameObject gameObject, Color color1, Color color2)
     {
-        chars = new Character[gameObject.GetComponentsInChildren<Character>().Length];
         chars = gameObject.GetComponentsInChildren<Character>();
+
         ColorHelper.GenerateColors(color1, color2, chars.Length, out generatedColors);
+
         for (int i = 0; i < chars.Length; i++)
         {
-
             chars[i].SetColor(generatedColors[i], i, charParents.IndexOf(gameObject));
-
+            gridManager.SetCharacterPosition(chars[i]);
         }
     }
     void SetCharColorAll()
@@ -65,11 +65,6 @@ public class GameManager : MonoBehaviour
         if (_sortedCharacters.Contains(character))
             return;
 
-        //gridManager.TurnToEmptyGrid(character.transform.position);
-        for (int i = 0; i < _sortedCharacters.Count; i++)
-        {
-            gridManager.TurnNullCharacter(character);
-        }
 
         emptyIndex = (emptyIndex + 1) % squares.Count;
         if (_sortedCharacters.Count != squareCount)
@@ -78,6 +73,8 @@ public class GameManager : MonoBehaviour
             SoundManager.PlaySound();
             character.CreateFX();
             _sortedCharacters.Add(character);
+
+            gridManager.ClearGrid(character);
         }
         character.GetComponent<Rigidbody>().useGravity = true;
         //character.GetComponent<Collider>().enabled = false;
@@ -155,23 +152,18 @@ public class GameManager : MonoBehaviour
     }
     void ReloadCharacters()
     {
-        //gridManager.FindEmptyGrid();
         for (int i = 0; i < squareCount; i++)
         {
             _sortedCharacters[i].GetComponent<Rigidbody>().useGravity = false;
 
-            
-            Vector3 vector = gridManager.GridCheck(_sortedCharacters[i]);
-            GameObject spawnChar = Instantiate(_sortedCharacters[i].gameObject, vector, Quaternion.identity);
+            GameObject spawnChar = Instantiate(_sortedCharacters[i].gameObject);
             spawnChar.GetComponent<Character>().SpawnedAnimation();
             spawnChar.GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);
+            gridManager.SetCharacterPosition(spawnChar.GetComponent<Character>());
+            //spawnChar.GetComponent<Rigidbody>().useGravity = true;
+
             //spawnChar.GetComponent<Character>().CreateFX();
-
-            //gridManager.TurnToFullGrid(vector);
-
-
         }
-        //gridManager.FindEmptyGrid();
     }
     void CalculateLoc(int characterCount, GameObject prefab)
     {

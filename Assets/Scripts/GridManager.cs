@@ -8,92 +8,90 @@ public class GridManager : MonoBehaviour
     float gridY = 0.6f;
     [SerializeField] int height;
     [SerializeField] int width;
-    Vector3[,] gridMatrix;
-    Grid[] grids;
+    // Vector3[,] gridMatrix;
 
-    private void Start()
+    Grid[,] gridMatrix;
+
+    [SerializeField] List<Vector2> invalidGridIndices = new List<Vector2>();
+
+    private void Awake()
     {
         CalculateGrid();
-        FindCharacterOnScene();
-
-    }
-    private void Update()
-    {
 
     }
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        for (int i = 0; i < height; i++)
+        for (int y = 0; y < height; y++)
         {
-            for (int j = 0; j < width; j++)
+            for (int x = 0; x < width; x++)
             {
-
-                Gizmos.DrawWireCube(gridMatrix[i, j], new Vector3(gridX, gridY, 0.6f));
+                Vector3 vector = new Vector3(transform.position.x + gridX * x, transform.position.y + gridY * y, -0.5f);
+                Gizmos.DrawWireCube(vector, new Vector3(gridX, gridY, 0.6f));
+                GUIStyle style = new GUIStyle();
+                style.alignment = TextAnchor.MiddleCenter;
+                style.normal.textColor = Color.black;
+                UnityEditor.Handles.Label(vector, x.ToString() + " - " + y.ToString(), style);
             }
         }
     }
     void CalculateGrid()
     {
-        gridMatrix = new Vector3[height, width];
-        grids = new Grid[height * width];
-        int i = 0;
+        gridMatrix = new Grid[height, width];
+
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
             {
-                gridMatrix[x, y] = new Vector3(transform.position.x + gridX * x, transform.position.y + gridY * y, -0.5f);
-                grids[i] = new Grid(x, y, null);
-                grids[i].vector = gridMatrix[x, y];
-                i++;
-            }
-        }
+                Grid g = new Grid(x, y, null);
+                g.vector = new Vector3(transform.position.x + gridX * x, transform.position.y + gridY * y, -0.5f);
+                gridMatrix[x, y] = g;
 
-    }
-    public Vector3 GridCheck(Character character)
-    {
-        for (int i = 0; i < grids.Length; i++)
-        {
-            if (grids[i].character == null)
-            {
-                grids[i].character = character;
-                return grids[i].vector;
-            }
-            else
-            {
-                Debug.Log("Empty grid is not found");
-            }
-        }
-        return new Vector3(0f, 0f, 0f);
-    }
-    public void TurnNullCharacter(Character character)
-    {
-        for (int i = 0; i < grids.Length; i++)
-        {
-            if (grids[i].character == character)
-            {
-                grids[i].character = null;
+                if (invalidGridIndices.Contains(new Vector2(x, y)))
+                    g.IsValid = false;
             }
         }
     }
-    public void DedectCharacterGrid(Character character,out float x,out float y)
+
+    public void SetCharacterPosition(Character c)
+    {
+        Vector2 index = new Vector2(-1, -1);
+
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                if (!gridMatrix[x, y].IsValid || gridMatrix[x, y].character != null)
+                    continue;
+
+                gridMatrix[x, y].character = c;
+                c.transform.position = gridMatrix[x, y].vector;
+
+                return;
+            }
+        }
+    }
+    public void DedectCharacterGrid(Character character, out float x, out float y)
     {
         x = character.transform.position.x / gridX;
         y = character.transform.position.y / gridY;
     }
-    void FindCharacterOnScene()
+
+    public void ClearGrid(Character c)
     {
-        Character[] chars = FindObjectsOfType<Character>();
-        for (int i = 0; i < chars.Length; i++)
+        for (int y = 0; y < height; y++)
         {
-            //if(grids[i].character == null)
-            //{
-            grids[i].character = chars[i];
-            chars[i].transform.position = grids[i].vector;
-            chars[i].SpawnedAnimation();
-            //}
+            for (int x = 0; x < width; x++)
+            {
+                if (gridMatrix[x, y].character == c)
+                {
+                    gridMatrix[x, y].character = null;
+
+                    return;
+                }
+            }
         }
     }
+
 }
 class Grid
 {
@@ -101,6 +99,7 @@ class Grid
     public int y;
     public Character character;
     public Vector3 vector;
+    public bool IsValid = true;
     public Grid(int x, int y, Character character)
     {
         this.x = x;
