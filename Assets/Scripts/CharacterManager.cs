@@ -22,8 +22,8 @@ public class CharacterManager : MonoBehaviour
 
     void Update()
     {
-        Invoke(nameof(MoveWithRay), 0.5f);
-        //MoveWithRay();
+        
+        MoveWithRay();
 
     }
 

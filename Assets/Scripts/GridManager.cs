@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 
 public class GridManager : MonoBehaviour
 {
@@ -8,7 +9,6 @@ public class GridManager : MonoBehaviour
     float gridY = 0.6f;
     [SerializeField] int height;
     [SerializeField] int width;
-    // Vector3[,] gridMatrix;
 
     Grid[,] gridMatrix;
 
@@ -17,7 +17,7 @@ public class GridManager : MonoBehaviour
     private void Awake()
     {
         CalculateGrid();
-
+        FindChars();
     }
     private void OnDrawGizmos()
     {
@@ -30,7 +30,8 @@ public class GridManager : MonoBehaviour
                 GUIStyle style = new GUIStyle();
                 style.alignment = TextAnchor.MiddleCenter;
                 style.normal.textColor = Color.black;
-                UnityEditor.Handles.Label(vector, x.ToString() + " - " + y.ToString(), style);
+                //UnityEditor.Handles.Label(vector, x.ToString() + " - " + y.ToString(), style);
+                //burada kodu yorum satirina aldim cunku diger turlu apk alamýyordum
             }
         }
     }
@@ -70,11 +71,6 @@ public class GridManager : MonoBehaviour
             }
         }
     }
-    public void DedectCharacterGrid(Character character, out float x, out float y)
-    {
-        x = character.transform.position.x / gridX;
-        y = character.transform.position.y / gridY;
-    }
 
     public void ClearGrid(Character c)
     {
@@ -91,7 +87,15 @@ public class GridManager : MonoBehaviour
             }
         }
     }
-
+    public void FindChars()
+    {
+        Character[] characters = new Character[height*width];
+        characters = FindObjectsOfType<Character>();
+        for (int i = 0; i < characters.Length; i++)
+        {
+            SetCharacterPosition(characters[i]);
+        }
+    }
 }
 class Grid
 {

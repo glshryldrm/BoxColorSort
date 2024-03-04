@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -39,15 +40,19 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < chars.Length; i++)
         {
             chars[i].SetColor(generatedColors[i], i, charParents.IndexOf(gameObject));
-            gridManager.SetCharacterPosition(chars[i]);
+            //gridManager.SetCharacterPosition(chars[i]);
+            
         }
+        
     }
+   
+   
     void SetCharColorAll()
     {
         if (charParents.Count == colorList.Count)
         {
             for (int i = 0; i < charParents.Count; i++)
-            {
+            { 
                 if (charParents[i].GetComponentsInChildren<Character>().Length == squareCount)
                 {
                     SetCharacterColor(charParents[i], colorList[i].color1, colorList[i].color2);
@@ -160,7 +165,7 @@ public class GameManager : MonoBehaviour
             spawnChar.GetComponent<Character>().SpawnedAnimation();
             spawnChar.GetComponent<Transform>().localScale = new Vector3(0.1f, 0.1f, 0.1f);
             gridManager.SetCharacterPosition(spawnChar.GetComponent<Character>());
-            //spawnChar.GetComponent<Rigidbody>().useGravity = true;
+
 
             //spawnChar.GetComponent<Character>().CreateFX();
         }
