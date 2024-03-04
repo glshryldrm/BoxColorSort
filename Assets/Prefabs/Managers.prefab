@@ -67,11 +67,11 @@ MonoBehaviour:
   spacing: 0.6
   squareVector: {x: 0, y: 0, z: 0}
   squares: []
-  squareCount: 5
+  squareCount: 4
   charParents:
   - {fileID: 0}
   colorList:
-  - color1: {r: 0.10134503, g: 0.3301887, b: 0, a: 1}
+  - color1: {r: 0.034738135, g: 0.26415092, b: 0.018440714, a: 1}
     color2: {r: 0, g: 0.8301887, b: 0.20754717, a: 1}
 --- !u!114 &6696267094835792444
 MonoBehaviour:
