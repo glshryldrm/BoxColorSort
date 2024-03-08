@@ -44,6 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6457b96daffa2b344b287800da60a0b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  squarePrefab: {fileID: 7729969493206632122, guid: 0865f88bbfde75042b454596d4101056, type: 3}
+  squarePrefab: {fileID: 6783936444972672493, guid: 5881adf7302e78648bfb6c994a02b29d, type: 3}
   particlePrefab: {fileID: 7810245235446376228, guid: f74938086aaf0e341bd4ebecafccfc35, type: 3}
   audioClip: {fileID: 8300000, guid: 9d77801dbce188c49b769424a6c05b1e, type: 3}
