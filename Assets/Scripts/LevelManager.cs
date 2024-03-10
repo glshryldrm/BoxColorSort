@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.UI;
 
-public class LevelManagerr : MonoBehaviour
+public class LevelManager : MonoBehaviour
 {
 
     public static bool check = false;
@@ -15,7 +15,6 @@ public class LevelManagerr : MonoBehaviour
 
     private void Start()
     {
-        //changeLevelName();
         changeName();
         
     }
