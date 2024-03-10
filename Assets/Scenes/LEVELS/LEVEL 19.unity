@@ -2055,7 +2055,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6696267094835792433, guid: d6010a35b36477941bc5179c12e490a3, type: 3}
       propertyPath: colorList.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 6696267094835792433, guid: d6010a35b36477941bc5179c12e490a3, type: 3}
       propertyPath: charParents.Array.size
@@ -2243,7 +2243,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6696267094835792433, guid: d6010a35b36477941bc5179c12e490a3, type: 3}
       propertyPath: colorList.Array.data[5].color1.b
-      value: 0
+      value: 0.09569551
       objectReference: {fileID: 0}
     - target: {fileID: 6696267094835792433, guid: d6010a35b36477941bc5179c12e490a3, type: 3}
       propertyPath: colorList.Array.data[5].color1.g
@@ -2251,7 +2251,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6696267094835792433, guid: d6010a35b36477941bc5179c12e490a3, type: 3}
       propertyPath: colorList.Array.data[5].color1.r
-      value: 0
+      value: 0.3301887
       objectReference: {fileID: 0}
     - target: {fileID: 6696267094835792433, guid: d6010a35b36477941bc5179c12e490a3, type: 3}
       propertyPath: colorList.Array.data[5].color2.a
@@ -2259,15 +2259,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6696267094835792433, guid: d6010a35b36477941bc5179c12e490a3, type: 3}
       propertyPath: colorList.Array.data[5].color2.b
-      value: 0.2807949
+      value: 0.29411745
       objectReference: {fileID: 0}
     - target: {fileID: 6696267094835792433, guid: d6010a35b36477941bc5179c12e490a3, type: 3}
       propertyPath: colorList.Array.data[5].color2.g
-      value: 0.23313455
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6696267094835792433, guid: d6010a35b36477941bc5179c12e490a3, type: 3}
       propertyPath: colorList.Array.data[5].color2.r
-      value: 0.2924528
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6696267094835792444, guid: d6010a35b36477941bc5179c12e490a3, type: 3}
       propertyPath: levelText
