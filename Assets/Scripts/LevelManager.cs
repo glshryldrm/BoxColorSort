@@ -24,9 +24,9 @@ public class LevelManager : MonoBehaviour
         
         if (!SceneManager.GetActiveScene().buildIndex.Equals(PlayerPrefs.GetInt(levelKey)))
         {
-            if (level == SceneManager.sceneCountInBuildSettings -1)
+            if (level == SceneManager.sceneCountInBuildSettings)
             {
-                int randomLevel = Random.Range(0, 35);
+                int randomLevel = Random.Range(2, SceneManager.sceneCountInBuildSettings);
                 SaveCurrentLevel(levelKey, randomLevel);
                 SceneManager.LoadScene(randomLevel);
             }
