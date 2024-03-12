@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.UI;
-
+using HomaGames.HomaBelly;
 public class LevelManager : MonoBehaviour
 {
-
+    [SerializeField] bool loadLevelOnStart = false;
+    [SerializeField] List<string> levels = new List<string>();
     public static bool check = false;
     public TextMeshProUGUI levelText;
     public GameObject completeLevelUI;
@@ -16,38 +17,51 @@ public class LevelManager : MonoBehaviour
     string levelNameKey = "LevelName";
     private void Start()
     {
-        LoadLevel(PlayerPrefs.GetInt(levelKey, 0));
-        changeName();
-    }
-    public void LoadLevel(int level)
-    {
-        
-        if (!SceneManager.GetActiveScene().buildIndex.Equals(PlayerPrefs.GetInt(levelKey)))
+        if (loadLevelOnStart)
+            LoadLevel(PlayerPrefs.GetInt(levelKey, 0));
+        else
         {
-            if (level == SceneManager.sceneCountInBuildSettings)
+            if (!HomaBelly.Instance.IsInitialized)
             {
-                int randomLevel = Random.Range(2, SceneManager.sceneCountInBuildSettings);
-                SaveCurrentLevel(levelKey, randomLevel);
-                SceneManager.LoadScene(randomLevel);
+                // Listen event for initialization
+                Events.onInitialized += OnHomaInit;
             }
             else
             {
-                SceneManager.LoadScene(level);
+                Analytics.LevelStarted(PlayerPrefs.GetInt(levelKey, 0));
             }
+        }
+
+        changeName();
+    }
+
+    void OnHomaInit()
+    {
+        Analytics.LevelStarted(PlayerPrefs.GetInt(levelKey, 0));
+    }
+    public void LoadLevel(int level)
+    {
+        SaveCurrentLevel(levelKey, level);
+
+        if (level == levels.Count)
+        {
+            int randomLevel = Random.Range(2, levels.Count);
+
+            SceneManager.LoadScene(levels[randomLevel]);
         }
         else
         {
-            SaveCurrentLevel(levelKey, level);
+            SceneManager.LoadScene(levels[level]);
         }
-
 
     }
     public void LoadNextLevel()
     {
         //completeLevelUI.SetActive(true);
 
-        Invoke(nameof(LoadNextLevelPrivate), 1f);
+        Analytics.LevelCompleted();
 
+        Invoke(nameof(LoadNextLevelPrivate), 1f);
     }
 
     void changeName()
@@ -56,14 +70,16 @@ public class LevelManager : MonoBehaviour
         {
             int i = (PlayerPrefs.GetInt(levelNameKey) + 1);
             SaveCurrentLevel(levelNameKey, i);
-            levelText.text = "LEVEL " + i;
+            if (levelText != null)
+                levelText.text = "LEVEL " + i;
             check = false;
         }
         else
         {
             int i = (PlayerPrefs.GetInt(levelNameKey, 1));
             SaveCurrentLevel(levelNameKey, i);
-            levelText.text = "LEVEL " + i;
+            if (levelText != null)
+                levelText.text = "LEVEL " + i;
         }
     }
     void LoadNextLevelPrivate()
@@ -81,6 +97,7 @@ public class LevelManager : MonoBehaviour
     }
     public void ReloadLevel()
     {
+        Analytics.LevelFailed("Restart");
         //reloadLevelUI.SetActive(true);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
