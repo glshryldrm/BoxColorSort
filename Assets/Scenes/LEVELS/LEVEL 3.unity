@@ -136,7 +136,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 451982745155230895, guid: dbd85949eef8eef4b98018888c17793e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.85
+      value: -1.5
       objectReference: {fileID: 0}
     - target: {fileID: 451982745155230895, guid: dbd85949eef8eef4b98018888c17793e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -957,7 +957,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6156054469086576471, guid: 5881adf7302e78648bfb6c994a02b29d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.85
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 6156054469086576471, guid: 5881adf7302e78648bfb6c994a02b29d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1400,7 +1400,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 451982745155230895, guid: dbd85949eef8eef4b98018888c17793e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.85
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 451982745155230895, guid: dbd85949eef8eef4b98018888c17793e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1577,6 +1577,10 @@ PrefabInstance:
     - target: {fileID: 277505802409462546, guid: 24c0dc4c98c7ffa46a317dfb0f45e117, type: 3}
       propertyPath: m_Name
       value: CubeCharTry2 1 (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 277505802409462546, guid: 24c0dc4c98c7ffa46a317dfb0f45e117, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 617616168534512040, guid: 24c0dc4c98c7ffa46a317dfb0f45e117, type: 3}
       propertyPath: m_RootOrder
@@ -1830,7 +1834,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6156054469086576471, guid: 5881adf7302e78648bfb6c994a02b29d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.85
+      value: -1.5
       objectReference: {fileID: 0}
     - target: {fileID: 6156054469086576471, guid: 5881adf7302e78648bfb6c994a02b29d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1896,7 +1900,7 @@ PrefabInstance:
       objectReference: {fileID: 183943978}
     - target: {fileID: 6696267094835792433, guid: d6010a35b36477941bc5179c12e490a3, type: 3}
       propertyPath: squareCount
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6696267094835792433, guid: d6010a35b36477941bc5179c12e490a3, type: 3}
       propertyPath: colorList.Array.size

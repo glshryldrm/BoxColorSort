@@ -749,6 +749,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CubeCharTry2 1 (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 277505802409462546, guid: 24c0dc4c98c7ffa46a317dfb0f45e117, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 617616168534512040, guid: 24c0dc4c98c7ffa46a317dfb0f45e117, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -1384,6 +1388,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CubeCharTry2 1 (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 277505802409462546, guid: 24c0dc4c98c7ffa46a317dfb0f45e117, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 617616168534512040, guid: 24c0dc4c98c7ffa46a317dfb0f45e117, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -1739,7 +1747,7 @@ PrefabInstance:
       objectReference: {fileID: 1575296304}
     - target: {fileID: 6696267094835792433, guid: d6010a35b36477941bc5179c12e490a3, type: 3}
       propertyPath: squareCount
-      value: 7
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6696267094835792433, guid: d6010a35b36477941bc5179c12e490a3, type: 3}
       propertyPath: colorList.Array.size

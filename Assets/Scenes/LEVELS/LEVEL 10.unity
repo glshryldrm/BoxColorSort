@@ -1518,7 +1518,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6696267094835792433, guid: d6010a35b36477941bc5179c12e490a3, type: 3}
       propertyPath: colorList.Array.data[1].color2.g
-      value: 0.27058825
+      value: 0.51805216
       objectReference: {fileID: 0}
     - target: {fileID: 6696267094835792433, guid: d6010a35b36477941bc5179c12e490a3, type: 3}
       propertyPath: colorList.Array.data[1].color2.r

@@ -8,7 +8,8 @@ public class GameAssets : MonoBehaviour
     private static GameAssets instance;
     public GameObject squarePrefab;
     public GameObject particlePrefab;
-    public AudioClip audioClip;
+    public AudioClip bubbleAudioClip;
+    public AudioClip correctAudioClip;
     public static GameAssets Instance 
     { 
         get
@@ -36,5 +37,4 @@ public class GameAssets : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(this.gameObject);
     }
-    
 }

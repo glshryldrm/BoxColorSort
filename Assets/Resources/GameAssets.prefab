@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4688221571003507392
 Transform:
   m_ObjectHideFlags: 0
@@ -46,4 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   squarePrefab: {fileID: 6783936444972672493, guid: 5881adf7302e78648bfb6c994a02b29d, type: 3}
   particlePrefab: {fileID: 7810245235446376228, guid: f74938086aaf0e341bd4ebecafccfc35, type: 3}
-  audioClip: {fileID: 8300000, guid: 9d77801dbce188c49b769424a6c05b1e, type: 3}
+  bubbleAudioClip: {fileID: 8300000, guid: 9d77801dbce188c49b769424a6c05b1e, type: 3}
+  correctAudioClip: {fileID: 8300000, guid: 7aa108d5310affe40bc606d862215674, type: 3}

@@ -12,52 +12,81 @@ public class LevelManager : MonoBehaviour
     public TextMeshProUGUI levelText;
     public GameObject completeLevelUI;
     public GameObject reloadLevelUI;
-
+    string levelKey = "currentLevel";
+    string levelNameKey = "LevelName";
     private void Start()
     {
+        LoadLevel(PlayerPrefs.GetInt(levelKey, 0));
         changeName();
-        
     }
-    public void ReloadLevel()
+    public void LoadLevel(int level)
     {
-        reloadLevelUI.SetActive(true);
-        Invoke(nameof(ReloadLevelPrivate), 1f);
+        
+        if (!SceneManager.GetActiveScene().buildIndex.Equals(PlayerPrefs.GetInt(levelKey)))
+        {
+            if (level == SceneManager.sceneCountInBuildSettings -1)
+            {
+                int randomLevel = Random.Range(0, 35);
+                SaveCurrentLevel(levelKey, randomLevel);
+                SceneManager.LoadScene(randomLevel);
+            }
+            else
+            {
+                SceneManager.LoadScene(level);
+            }
+        }
+        else
+        {
+            SaveCurrentLevel(levelKey, level);
+        }
+
+
     }
     public void LoadNextLevel()
     {
-        completeLevelUI.SetActive(true);
+        //completeLevelUI.SetActive(true);
 
         Invoke(nameof(LoadNextLevelPrivate), 1f);
-        
+
     }
-    
+
     void changeName()
     {
         if (check)
         {
-            levelText.text = SceneManager.GetActiveScene().name;
+            int i = (PlayerPrefs.GetInt(levelNameKey) + 1);
+            SaveCurrentLevel(levelNameKey, i);
+            levelText.text = "LEVEL " + i;
             check = false;
         }
         else
         {
-            levelText.text = SceneManager.GetActiveScene().name;
+            int i = (PlayerPrefs.GetInt(levelNameKey, 1));
+            SaveCurrentLevel(levelNameKey, i);
+            levelText.text = "LEVEL " + i;
         }
     }
     void LoadNextLevelPrivate()
     {
         check = true;
         changeName();
-        if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
-        {
-            SceneManager.LoadScene(0);
-        }
-        else
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        }
+
+        int currentLevel = PlayerPrefs.GetInt(levelKey, 0);
+        int nextLevel = currentLevel + 1;
+
+        SaveCurrentLevel(levelKey, nextLevel);
+
+        LoadLevel(nextLevel);
+
     }
-    public void ReloadLevelPrivate()
+    public void ReloadLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        //reloadLevelUI.SetActive(true);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    void SaveCurrentLevel(string Key, int level)
+    {
+        PlayerPrefs.SetInt(Key, level);
+        PlayerPrefs.Save();
     }
 }

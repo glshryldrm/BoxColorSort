@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
         if (_sortedCharacters.Count != squareCount)
         {
             character.transform.position = squares[emptyIndex];
-            SoundManager.PlaySound();
+            SoundManager.PlayBubbleSound();
             character.CreateFX();
             _sortedCharacters.Add(character);
 
@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
             Invoke(nameof(DestroySortedChar), 0.7f);
             Invoke(nameof(DestroyNPCs), 0.7f);
             Invoke(nameof(SetTouchCheck), 0.7f);
-
+            
             //Next level
             Invoke(nameof(LoadNextPrivate), 1f);
 
@@ -148,7 +148,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(_sortedCharacters[i].gameObject);
             _sortedCharacters[i].CreateFX();
-            SoundManager.PlaySound();
+            SoundManager.PlayBubbleSound();
         }
         _sortedCharacters.Clear();
     }
@@ -158,8 +158,9 @@ public class GameManager : MonoBehaviour
         {
             Destroy(NPCs[i].gameObject);
             NPCs[i].CreateFX();
-            SoundManager.PlaySound();
+            SoundManager.PlayBubbleSound();
         }
+        SoundManager.PlayCorrectSound();
     }
     void FindNPCs()
     {
