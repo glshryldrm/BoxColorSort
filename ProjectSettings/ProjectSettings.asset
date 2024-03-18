@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: fugi
-  productName: Box Hue Sort
+  productName: Box Color Sort
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -155,7 +155,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.fugi.boxhuesort
+    Android: com.fugi.boxcolorsort
     iPhone: com.fugi.boxhuesort
   buildNumber:
     Standalone: 0
@@ -814,7 +814,7 @@ PlayerSettings:
   webGLDecompressionFallback: 0
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Android: UNITY_POST_PROCESSING_STACK_V2;HOMA_BELLY;HOMA_BELLY_DEBUG_CLASS_OVERRIDE_ENABLED
+    Android: UNITY_POST_PROCESSING_STACK_V2;HOMA_BELLY_DEBUG_CLASS_OVERRIDE_ENABLED;HOMA_BELLY
     EmbeddedLinux: UNITY_POST_PROCESSING_STACK_V2
     GameCoreXboxOne: UNITY_POST_PROCESSING_STACK_V2
     Lumin: UNITY_POST_PROCESSING_STACK_V2
@@ -826,7 +826,7 @@ PlayerSettings:
     WebGL: UNITY_POST_PROCESSING_STACK_V2
     Windows Store Apps: UNITY_POST_PROCESSING_STACK_V2
     XboxOne: UNITY_POST_PROCESSING_STACK_V2
-    iPhone: HOMA_BELLY;HOMA_BELLY_DEBUG_CLASS_OVERRIDE_ENABLED
+    iPhone: HOMA_BELLY_DEBUG_CLASS_OVERRIDE_ENABLED;HOMA_BELLY
     tvOS: UNITY_POST_PROCESSING_STACK_V2
   additionalCompilerArguments: {}
   platformArchitecture: {}

@@ -14,7 +14,6 @@ public class LevelManager : MonoBehaviour
     public GameObject completeLevelUI;
     public GameObject reloadLevelUI;
     string levelKey = "currentLevel";
-    string levelNameKey = "LevelName";
     private void Start()
     {
         if (loadLevelOnStart)
@@ -43,7 +42,7 @@ public class LevelManager : MonoBehaviour
     {
         SaveCurrentLevel(levelKey, level);
 
-        if (level == levels.Count)
+        if (level >= levels.Count)
         {
             int randomLevel = Random.Range(2, levels.Count);
 
@@ -68,18 +67,14 @@ public class LevelManager : MonoBehaviour
     {
         if (check)
         {
-            int i = (PlayerPrefs.GetInt(levelNameKey) + 1);
-            SaveCurrentLevel(levelNameKey, i);
             if (levelText != null)
-                levelText.text = "LEVEL " + i;
+                levelText.text = "LEVEL " + (PlayerPrefs.GetInt(levelKey, 0) + 1).ToString();
             check = false;
         }
         else
         {
-            int i = (PlayerPrefs.GetInt(levelNameKey, 1));
-            SaveCurrentLevel(levelNameKey, i);
             if (levelText != null)
-                levelText.text = "LEVEL " + i;
+                levelText.text = "LEVEL " + (PlayerPrefs.GetInt(levelKey, 0) + 1).ToString();
         }
     }
     void LoadNextLevelPrivate()
