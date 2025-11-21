@@ -1,7 +1,7 @@
 # 📦 BoxColorSort  
 
 ## 🎮 What is BoxColorSort?
-BoxColorSort is a simple and engaging mobile puzzle prototype where the player sorts boxes based on their colors. The game was developed for Android and has a prototype version published on the Google Play Store.
+Box Color Sort is a puzzle game focused on correctly arranging and sorting colors. Players must place cells of different colors from darkest to lightest at the place front of the grid. The game enhances visual attention and logical sequencing skills. The game was developed for Android and has a prototype version published on the Google Play Store.
 
 **Play Store (Prototype):**  
 https://play.google.com/store/apps/details?id=com.fugi.boxcolorsort
