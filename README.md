@@ -28,8 +28,6 @@ This repository contains the Unity source code for the development version.
 
 ## 📸 Screenshots
 
-## 📸 Screenshots
-
 <p float="left">
   <img src="https://github.com/user-attachments/assets/cf454a39-13fc-4c26-a673-34e00498e529" width="220" />
   <img src="https://github.com/user-attachments/assets/c85ea453-79cd-4da8-9e1a-27d4a859a50d" width="220" />
@@ -40,4 +38,4 @@ This repository contains the Unity source code for the development version.
 ---
 
 ## 📜 License
-This project all rights reserved.
+This project's all rights reserved.
